@@ -1,0 +1,71 @@
+<?php
+
+namespace AppBundle\Entity;
+
+/**
+ * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
+ *
+ * @final
+ */
+final class TodoList
+{
+    /**
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $token;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+
+    /**
+     * @param string $token
+     */
+    public function __construct($token)
+    {
+        $this->token = $token;
+        $this->createdAt = new \DateTime('now');
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return $this
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+}

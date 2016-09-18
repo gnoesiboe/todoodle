@@ -1,0 +1,13 @@
+home:
+    path: /
+    defaults: { _controller: controller.home:homeAction }
+
+create_new_todo_list:
+    path: /create-new-todo-list
+    defaults: { _controller: controller.create_new_todo_list:createAction }
+
+todo_list_detail:
+    path: /todo-list/{id}/{token}
+    defaults: { _controller: controller.todo_list_detail:detailAction }
+    requirements:
+        id: \d+

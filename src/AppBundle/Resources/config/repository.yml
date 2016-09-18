@@ -1,0 +1,6 @@
+services:
+    repository.todo_list:
+        class: AppBundle\Repository\TodoListRepository
+        factory: [ '@doctrine', getRepository ]
+        arguments:
+            - 'AppBundle\Entity\TodoList'

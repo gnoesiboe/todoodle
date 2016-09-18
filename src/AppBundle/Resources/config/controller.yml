@@ -1,0 +1,13 @@
+services:
+    controller.home:
+        class: AppBundle\Controller\HomeController
+
+    controller.create_new_todo_list:
+        class: AppBundle\Controller\CreateNewTodoListController
+        arguments:
+            - '@repository.todo_list'
+            - '@factory.todo_list'
+            - '@router'
+
+    controller.todo_list_detail:
+        class: AppBundle\Controller\TodoListDetailController

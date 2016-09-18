@@ -1,0 +1,3 @@
+services:
+    factory.todo_list:
+        class: AppBundle\Entity\Factory\TodoListFactory
