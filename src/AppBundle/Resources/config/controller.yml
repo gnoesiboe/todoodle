@@ -11,3 +11,5 @@ services:
 
     controller.todo_list_detail:
         class: AppBundle\Controller\TodoListDetailController
+        arguments:
+            - '@repository.todo_list'

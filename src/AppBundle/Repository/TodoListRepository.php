@@ -11,14 +11,17 @@ use Doctrine\ORM\EntityRepository;
 final class TodoListRepository extends EntityRepository
 {
     /**
+     * @param int $id
      * @param string $token
      *
      * @return TodoList|null
      */
-    public function findOneByToken($token)
+    public function findOneByIdAndToken($id, $token)
     {
         $query = $this->createQueryBuilder('tl')
-            ->where('tl.token = :token')
+            ->where('tl.id = :id')
+            ->setParameter('id', $id)
+            ->andWhere('tl.token = :token')
             ->setParameter('token', $token)
             ->getQuery();
 
