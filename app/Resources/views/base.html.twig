@@ -22,6 +22,12 @@
         {% block javascripts %}
             <script src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
             <script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+            {% if app.environment == "dev" %}
+                <script src="{{ asset('webpack-dev-server.js') }}"></script>
+            {% endif %}
+
+            <script type="text/javascript" src="{{ asset('build/app.js') }}"></script>
         {% endblock %}
     </body>
 </html>
