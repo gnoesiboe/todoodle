@@ -22,5 +22,6 @@ final class AppExtension extends Extension
         $loader->load('controller.yml');
         $loader->load('repository.yml');
         $loader->load('factory.yml');
+        $loader->load('response.yml');
     }
 }

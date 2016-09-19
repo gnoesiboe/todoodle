@@ -1,0 +1,5 @@
+services:
+
+    # Factory
+    response.factory.todo_list:
+        class: AppBundle\Response\Factory\TodoListResponseFactory

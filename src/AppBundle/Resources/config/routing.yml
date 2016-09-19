@@ -11,3 +11,10 @@ todo_list_detail:
     defaults: { _controller: controller.todo_list_detail:detailAction }
     requirements:
         id: \d+
+
+# Api
+api_todo_list_detail:
+    path: /api/todo-list/{id}/{token}.json
+    defaults: { _controller: controller.api.todo_list_detail:detailAction, _format: json }
+    requirements:
+        id: \d+
