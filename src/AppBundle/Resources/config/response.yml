@@ -3,3 +3,8 @@ services:
     # Factory
     response.factory.todo_list:
         class: AppBundle\Response\Factory\TodoListResponseFactory
+        arguments:
+            - '@response.factory.todo_list_item'
+
+    response.factory.todo_list_item:
+        class: AppBundle\Response\Factory\TodoListItemResponseFactory

@@ -77,4 +77,12 @@ final class TodoList
     {
         return $this->createdAt;
     }
+
+    /**
+     * @return TodoListItem[]|Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
 }

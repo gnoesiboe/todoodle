@@ -3,6 +3,7 @@
 namespace AppBundle\Response\Factory;
 
 use AppBundle\Entity\TodoList;
+use AppBundle\Entity\TodoListItem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -10,6 +11,19 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 final class TodoListResponseFactory
 {
+    /**
+     * @var TodoListItemResponseFactory
+     */
+    private $todoListItemResponseFactory;
+
+    /**
+     * @param TodoListItemResponseFactory $todoListItemResponseFactory
+     */
+    public function __construct(TodoListItemResponseFactory $todoListItemResponseFactory)
+    {
+        $this->todoListItemResponseFactory = $todoListItemResponseFactory;
+    }
+
     /**
      * @param TodoList $todoList
      *
@@ -23,7 +37,12 @@ final class TodoListResponseFactory
                     'todoList' => [
                         'id' => (int) $todoList->getId(),
                         'token' => $todoList->getToken(),
-                        'createdAt' => $todoList->getCreatedAt()->format('r')
+                        'createdAt' => $todoList->getCreatedAt()->format('r'),
+                        'items' => $todoList->getItems()->map(
+                            function (TodoListItem $todoListItem) {
+                                return $this->todoListItemResponseFactory->createListBody($todoListItem);
+                            }
+                        )->toArray()
                     ]
                 ]
             ]
