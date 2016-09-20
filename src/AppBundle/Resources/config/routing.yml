@@ -18,3 +18,5 @@ api_todo_list_detail:
     defaults: { _controller: controller.api.todo_list_detail:detailAction, _format: json }
     requirements:
         id: \d+
+    options:
+        expose: true
