@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>{{ todoList.token }}</h1>
-    <div class="react-container">
+    <div class="js-app-container" data-id="{{ todoList.id }}" data-token="{{ todoList.token }}">
         Loading..
     </div>
 {% endblock %}
