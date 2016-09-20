@@ -12,3 +12,7 @@ AppBundle\Entity\TodoList:
             unique: true
         createdAt:
             type: datetime
+    oneToMany:
+        items:
+            targetEntity: AppBundle\Entity\TodoListItem
+            mappedBy: todoList

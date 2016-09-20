@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
@@ -25,12 +27,19 @@ final class TodoList
     private $createdAt;
 
     /**
+     * @var Collection|TodoListItem[]
+     */
+    private $items;
+
+    /**
      * @param string $token
      */
     public function __construct($token)
     {
         $this->token = $token;
         $this->createdAt = new \DateTime('now');
+
+        $this->items = new ArrayCollection();
     }
 
     /**
