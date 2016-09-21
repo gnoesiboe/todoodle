@@ -3,6 +3,7 @@ import * as reactRedux from 'react-redux';
 import * as stateNamespace from './../../model/stateNamespace';
 import { createImportTodoListAction } from './../../model/factory/actionFactory';
 import _ from 'lodash';
+import TodoList from './../presentation/todoList';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
@@ -27,14 +28,7 @@ class Application extends React.Component {
 
         return (
             <div>
-                { _.isObject(todoList) ? todoList.id : 'Loading..' }
-                <ul>
-                    { todoListItems.all().map((todoListItem) => {
-                        return (
-                            <li key={ todoListItem.id }>{ todoListItem.title }</li>
-                        );
-                    })}
-                </ul>
+                <TodoList items={ todoListItems } />
             </div>
         );
     }
