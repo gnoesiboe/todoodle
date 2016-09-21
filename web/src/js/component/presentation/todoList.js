@@ -11,22 +11,24 @@ class TodoList extends React.Component {
      */
     render() {
         return (
-            <div>
+            <ul className="list-unstyled">
                 { this.props.items.all().map((todoListItem) => {
                     return (
-                        <div className="row" key={ todoListItem.id }>
-                            <form className="form-inline">
-                                <div className="checkbox">
-                                    <label>
-                                        <input type="checkbox" />
-                                        { todoListItem.title }
-                                    </label>
-                                </div>
-                            </form>
-                        </div>
+                        <li key={ todoListItem.id }>
+                            <div className="row">
+                                <form className="form-inline">
+                                    <div className="checkbox">
+                                        <label>
+                                            <input type="checkbox" />
+                                            <span>{ todoListItem.title }</span>
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
                     );
                 }) }
-            </div>
+            </ul>
         );
     }
 }
