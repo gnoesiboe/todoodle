@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoListItemCollection from './../../collection/todoListItemCollection';
+import TodoListItem from './todoListItem';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
@@ -15,16 +16,10 @@ class TodoList extends React.Component {
                 { this.props.items.all().map((todoListItem) => {
                     return (
                         <li key={ todoListItem.id }>
-                            <div className="row">
-                                <form className="form-inline">
-                                    <div className="checkbox">
-                                        <label>
-                                            <input type="checkbox" />
-                                            <span>{ todoListItem.title }</span>
-                                        </label>
-                                    </div>
-                                </form>
-                            </div>
+                            <TodoListItem
+                                title={ todoListItem.title }
+                                checked={ todoListItem.checked }
+                            />
                         </li>
                     );
                 }) }
