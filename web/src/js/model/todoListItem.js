@@ -43,6 +43,18 @@ class TodoListItem {
     get checked() {
         return this._checked;
     }
+
+    /**
+     * @returns {TodoListItem}
+     */
+    clone() {
+        return new TodoListItem(
+            this._id,
+            this._externalId,
+            this._title,
+            this._checked
+        );
+    }
 }
 
 export default TodoListItem;

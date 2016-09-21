@@ -1,0 +1,12 @@
+.todo-list-item {
+    position: relative;
+}
+
+    .todo-list-item-checked {
+        position: absolute;
+        left: 4px;
+    }
+
+    .todo-list-item-title {
+        padding-left: 15px;
+    }

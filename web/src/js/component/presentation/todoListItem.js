@@ -10,12 +10,12 @@ class TodoListItem extends React.Component {
      */
     render() {
         return (
-            <div className="row">
+            <div className="row todo-list-item">
                 <form className="form-inline">
                     <div className="checkbox">
                         <label>
-                            <input type="checkbox" checked={ this.props.checked } />
-                            <span>{ this.props.title }</span>
+                            <input type="checkbox" className="todo-list-item-checked" checked={ this.props.checked } />
+                            <span className="todo-list-item-title" >{ this.props.title }</span>
                         </label>
                     </div>
                 </form>

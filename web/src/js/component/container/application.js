@@ -27,8 +27,10 @@ class Application extends React.Component {
             todoList = current.get('todoList');
 
         return (
-            <div>
-                <TodoList items={ todoListItems } />
+            <div className="row">
+                <div className="col-sm-12">
+                    <TodoList items={ todoListItems } />
+                </div>
             </div>
         );
     }
