@@ -22,11 +22,19 @@ class Application extends React.Component {
      * @returns {XML}
      */
     render() {
-        var todoList = this.props.current.get('todoList');
+        var { current, todoListItems } = this.props,
+            todoList = current.get('todoList');
 
         return (
             <div>
                 { _.isObject(todoList) ? todoList.id : 'Loading..' }
+                <ul>
+                    { todoListItems.all().map((todoListItem) => {
+                        return (
+                            <li key={ todoListItem.id }>{ todoListItem.title }</li>
+                        );
+                    })}
+                </ul>
             </div>
         );
     }
@@ -48,7 +56,8 @@ Application.propTypes = {
  */
 var mapCompleteStateToApplicationProps = function (completeState) {
     return {
-        current: completeState[stateNamespace.CURRENT]
+        current: completeState[stateNamespace.CURRENT],
+        todoListItems: completeState[stateNamespace.TODO_LIST_ITEMS]
     }
 };
 
