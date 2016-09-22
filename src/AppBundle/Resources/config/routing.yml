@@ -24,6 +24,7 @@ api_todo_list_detail:
 api_todo_list_item_check:
     path: /api/todo-list/{todoListId}/{todoListToken}/items/{id}/check.json
     defaults: { _controller: controller.api.todo_list_item_check:checkAction, _format: json }
+    methods: PUT
     requirements:
         todoListId: \d+
         id: \d+
@@ -33,6 +34,7 @@ api_todo_list_item_check:
 api_todo_list_item_uncheck:
     path: /api/todo-list/{todoListId}/{todoListToken}/items/{id}/uncheck.json
     defaults: { _controller: controller.api.todo_list_item_check:uncheckAction, _format: json }
+    methods: PUT
     requirements:
         todoListId: \d+
         id: \d+

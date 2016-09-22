@@ -26,7 +26,7 @@ class TodoList {
     /**
      * @returns {Number}
      */
-    get exernalId() {
+    get externalId() {
         return this._externalId;
     }
 

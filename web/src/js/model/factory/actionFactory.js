@@ -75,14 +75,31 @@ var _createCheckTodoListItemStartAction = function (id) {
 
 /**
  * @param {String} id
+ * @param {Object} apiData
  *
  * @returns {Object}
  *
  * @private
  */
-var _createUncheckTodoListItemStartAction = function (id) {
-    return _createAction(actionType.UNCHECK_TODO_LIST_ITEM_START, {
-        id: id
+var _createCheckTodoListItemImportAction = function (id, apiData) {
+    return _createAction(actionType.CHECK_TODO_LIST_ITEM_IMPORT, {
+        id: id,
+        apiData: apiData
+    });
+};
+
+/**
+ * @param {String} id
+ * @param {Error=} error
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createCheckTodoListItemStopAction = function (id, error = null) {
+    return _createAction(actionType.CHECK_TODO_LIST_ITEM_STOP, {
+        id: id,
+        error: error
     });
 };
 
@@ -98,9 +115,59 @@ export function createCheckTodoListItemAction(externalTodoListId, todoListToken,
     return function (dispatch) {
         dispatch(_createCheckTodoListItemStartAction(id));
 
-        //@todo api save
+        apiClient.checkTodoListItem(externalTodoListId, todoListToken, externalId)
+            .then((apiData) => {
+                dispatch(_createCheckTodoListItemImportAction(id, apiData));
+                dispatch(_createCheckTodoListItemStopAction(id));
+            })
+            .catch((error) => {
+                dispatch(_createCheckTodoListItemStopAction(id, error));
+            });
     }
 }
+
+/**
+ * @param {String} id
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createUncheckTodoListItemStartAction = function (id) {
+    return _createAction(actionType.UNCHECK_TODO_LIST_ITEM_START, {
+        id: id
+    });
+};
+
+/**
+ * @param {String} id
+ * @param {Object} apiData
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createUncheckTodoListItemImportAction = function (id, apiData) {
+    return _createAction(actionType.UNCHECK_TODO_LIST_ITEM_IMPORT, {
+        id: id,
+        apiData: apiData
+    });
+};
+
+/**
+ * @param {String} id
+ * @param {Error=} error
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createUncheckTodoListItemStopAction = function (id, error = null) {
+    return _createAction(actionType.UNCHECK_TODO_LIST_ITEM_STOP, {
+        id: id,
+        error: error
+    });
+};
 
 /**
  * @param {Number} externalTodoListId
@@ -114,7 +181,14 @@ export function createUncheckTodoListItemAction(externalTodoListId, todoListToke
     return function (dispatch) {
         dispatch(_createUncheckTodoListItemStartAction(id));
 
-        //@todo api save
+        apiClient.uncheckTodoListItem(externalTodoListId, todoListToken, externalId)
+            .then((apiData) => {
+                dispatch(_createUncheckTodoListItemImportAction(id, apiData));
+                dispatch(_createUncheckTodoListItemStopAction(id));
+            })
+            .catch((error) => {
+                dispatch(_createUncheckTodoListItemStopAction(id, error));
+            });
     }
 }
 
@@ -137,6 +211,6 @@ export function createImportTodoListAction(externalId, token) {
             })
             .catch((error) => {
                 dispatch(_createImportTodoListStopAction(id, error));
-            })
+            });
     }
 }

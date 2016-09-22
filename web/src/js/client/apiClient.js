@@ -33,21 +33,91 @@ var _parseResponse = function (response) {
 
 /**
  * @param {String} url
- * @param {Object} configuration
+ * @param {Object=} configuration
  *
  * @returns {Promise}
  *
  * @private
  */
-var _executeGet = function (url, configuration = {}) {
+var _execute = function (url, configuration = {}) {
     return fetch (url, configuration)
         .then((response) => {
             _validateResponseStatusCode(response);
 
             return response;
         })
-        .then(_parseResponse);
+        .then(_parseResponse)
 };
+
+/**
+ * @param {String} url
+ *
+ * @returns {Promise}
+ *
+ * @private
+ */
+var _executeGet = function (url) {
+    return _execute(url);
+};
+
+/**
+ * @param {String} url
+ * 
+ * @returns {Promise}
+ *
+ * @private
+ */
+var _executePut = function (url) {
+    return _execute(url, {
+        method: 'put'
+    });
+};
+
+/**
+ * @param {Number} todoListId
+ * @param {String} todoListToken
+ * @param {Number} id
+ *
+ * @returns {Promise}
+ */
+export function checkTodoListItem(todoListId, todoListToken, id) {
+    return new Promise(
+        function (resolve, reject) {
+            var url = window.Routing.generate('api_todo_list_item_check', {
+                todoListId: todoListId,
+                todoListToken: todoListToken,
+                id: id
+            });
+
+            _executePut(url)
+                .then((json) => resolve(json))
+                .catch((error) => reject(error));
+        }
+    )
+}
+
+/**
+ * @param {Number} todoListId
+ * @param {String} todoListToken
+ * @param {Number} id
+ *
+ * @returns {Promise}
+ */
+export function uncheckTodoListItem(todoListId, todoListToken, id) {
+    return new Promise(
+        function (resolve, reject) {
+            var url = window.Routing.generate('api_todo_list_item_uncheck', {
+                todoListId: todoListId,
+                todoListToken: todoListToken,
+                id: id
+            });
+
+            _executePut(url)
+                .then((json) => resolve(json))
+                .catch((error) => reject(error));
+        }
+    )
+}
 
 /**
  * @param {Number} id

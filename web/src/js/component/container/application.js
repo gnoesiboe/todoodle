@@ -2,7 +2,6 @@ import React from 'react';
 import * as reactRedux from 'react-redux';
 import * as stateNamespace from './../../model/stateNamespace';
 import { createImportTodoListAction } from './../../model/factory/actionFactory';
-import _ from 'lodash';
 import TodoList from './../presentation/todoList';
 import * as actionFactory from './../../model/factory/actionFactory';
 
@@ -31,8 +30,8 @@ class Application extends React.Component {
         var todoList = this.props.current.get('todoList');
 
         var action = newChecked
-            ? actionFactory.createCheckTodoListItemAction(todoList.id, todoList.token, id, externalId)
-            : actionFactory.createUncheckTodoListItemAction(todoList.id, todoList.token, id, externalId);
+            ? actionFactory.createCheckTodoListItemAction(todoList.externalId, todoList.token, id, externalId)
+            : actionFactory.createUncheckTodoListItemAction(todoList.externalId, todoList.token, id, externalId);
 
         this.props.dispatch(action);
     }
