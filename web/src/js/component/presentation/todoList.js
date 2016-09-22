@@ -17,8 +17,11 @@ class TodoList extends React.Component {
                     return (
                         <li key={ todoListItem.id }>
                             <TodoListItem
+                                id={ todoListItem.id }
+                                externalId={ todoListItem.externalId }
                                 title={ todoListItem.title }
                                 checked={ todoListItem.checked }
+                                onCheckedChange={ this.props.onTodoCheckedChange }
                             />
                         </li>
                     );
@@ -29,7 +32,8 @@ class TodoList extends React.Component {
 }
 
 TodoList.propTypes = {
-    items: React.PropTypes.instanceOf(TodoListItemCollection).isRequired
+    items: React.PropTypes.instanceOf(TodoListItemCollection).isRequired,
+    onTodoCheckedChange: React.PropTypes.func.isRequired
 };
 
 export default TodoList;

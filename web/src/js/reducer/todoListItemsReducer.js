@@ -43,12 +43,62 @@ var _handleImportTodoListImport = function (currentState, action) {
  * @param {TodoListItemCollection} currentState
  * @param {Object} action
  *
+ * @return {TodoListItemCollection}
+ *
+ * @private
+ */
+var _handleCheckTodoListItemStartAction = function (currentState, action) {
+    var index = currentState.getIndexById(action.payload.id);
+
+    if (index === -1) {
+        throw new Error(`Handling action for non existent todo list item with id: ${id}`);
+    }
+
+    var newTodoListItem = currentState.getOneWithIndex(index).clone();
+
+    newTodoListItem.checked = true;
+
+    return currentState.insertAtIndex(index, newTodoListItem);
+};
+
+/**
+ * @param {TodoListItemCollection} currentState
+ * @param {Object} action
+ *
+ * @return {TodoListItemCollection}
+ *
+ * @private
+ */
+var _handleUncheckTodoListItemStartAction = function (currentState, action) {
+    var index = currentState.getIndexById(action.payload.id);
+
+    if (index === -1) {
+        throw new Error(`Handling action for non existent todo list item with id: ${id}`);
+    }
+
+    var newTodoListItem = currentState.getOneWithIndex(index).clone();
+
+    newTodoListItem.checked = false;
+
+    return currentState.insertAtIndex(index, newTodoListItem);
+};
+
+/**
+ * @param {TodoListItemCollection} currentState
+ * @param {Object} action
+ *
  * @returns {TodoListItemCollection}
  */
 export default function todoListItemsReducer(currentState = _defaultState, action) {
     switch (action.type) {
         case actionType.IMPORT_TODO_LIST_IMPORT:
             return _handleImportTodoListImport(currentState, action);
+
+        case actionType.CHECK_TODO_LIST_ITEM_START:
+            return _handleCheckTodoListItemStartAction(currentState, action);
+
+        case actionType.UNCHECK_TODO_LIST_ITEM_START:
+            return _handleUncheckTodoListItemStartAction(currentState, action);
     }
 
     return currentState;

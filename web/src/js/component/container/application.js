@@ -4,6 +4,7 @@ import * as stateNamespace from './../../model/stateNamespace';
 import { createImportTodoListAction } from './../../model/factory/actionFactory';
 import _ from 'lodash';
 import TodoList from './../presentation/todoList';
+import * as actionFactory from './../../model/factory/actionFactory';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
@@ -20,6 +21,23 @@ class Application extends React.Component {
     }
 
     /**
+     * @param {String} id
+     * @param {Number} externalId
+     * @param {Boolean} newChecked
+     *
+     * @private
+     */
+    _onTodoCheckedChange(id, externalId, newChecked) {
+        var todoList = this.props.current.get('todoList');
+
+        var action = newChecked
+            ? actionFactory.createCheckTodoListItemAction(todoList.id, todoList.token, id, externalId)
+            : actionFactory.createUncheckTodoListItemAction(todoList.id, todoList.token, id, externalId);
+
+        this.props.dispatch(action);
+    }
+
+    /**
      * @returns {XML}
      */
     render() {
@@ -29,7 +47,10 @@ class Application extends React.Component {
         return (
             <div className="row">
                 <div className="col-sm-12">
-                    <TodoList items={ todoListItems } />
+                    <TodoList
+                        items={ todoListItems }
+                        onTodoCheckedChange={ this._onTodoCheckedChange.bind(this) }
+                    />
                 </div>
             </div>
         );

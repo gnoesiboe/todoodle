@@ -61,6 +61,64 @@ var _createImportTodoListImportAction = function (id, apiData) {
 };
 
 /**
+ * @param {String} id
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createCheckTodoListItemStartAction = function (id) {
+    return _createAction(actionType.CHECK_TODO_LIST_ITEM_START, {
+        id: id
+    });
+};
+
+/**
+ * @param {String} id
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createUncheckTodoListItemStartAction = function (id) {
+    return _createAction(actionType.UNCHECK_TODO_LIST_ITEM_START, {
+        id: id
+    });
+};
+
+/**
+ * @param {Number} externalTodoListId
+ * @param {String} todoListToken
+ * @param {String} id
+ * @param {Number} externalId
+ *
+ * @returns {Function}
+ */
+export function createCheckTodoListItemAction(externalTodoListId, todoListToken, id, externalId) {
+    return function (dispatch) {
+        dispatch(_createCheckTodoListItemStartAction(id));
+
+        //@todo api save
+    }
+}
+
+/**
+ * @param {Number} externalTodoListId
+ * @param {String} todoListToken
+ * @param {String} id
+ * @param {Number} externalId
+ *
+ * @returns {Function}
+ */
+export function createUncheckTodoListItemAction(externalTodoListId, todoListToken, id, externalId) {
+    return function (dispatch) {
+        dispatch(_createUncheckTodoListItemStartAction(id));
+
+        //@todo api save
+    }
+}
+
+/**
  * @param {Number} externalId
  * @param {String} token
  *

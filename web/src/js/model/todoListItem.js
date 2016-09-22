@@ -38,10 +38,24 @@ class TodoListItem {
     }
 
     /**
+     * @param {String} title
+     */
+    set title(title) {
+        this._title = title;
+    }
+
+    /**
      * @returns {Boolean}
      */
     get checked() {
         return this._checked;
+    }
+
+    /**
+     * @param {Boolean} checked
+     */
+    set checked(checked) {
+        this._checked = checked;
     }
 
     /**
