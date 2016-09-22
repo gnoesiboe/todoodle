@@ -16,3 +16,4 @@ AppBundle\Entity\TodoList:
         items:
             targetEntity: AppBundle\Entity\TodoListItem
             mappedBy: todoList
+            cascade: ['all']

@@ -85,4 +85,18 @@ final class TodoList
     {
         return $this->items;
     }
+
+    /**
+     * @param int $id
+     *
+     * @return TodoListItem|null
+     */
+    public function getItemWithId($id)
+    {
+        return $this->items
+            ->filter(function (TodoListItem $item) use ($id) {
+                return $item->isId($id);
+            })
+            ->first();
+    }
 }

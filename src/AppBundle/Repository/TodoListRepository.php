@@ -36,4 +36,16 @@ final class TodoListRepository extends EntityRepository
         $this->getEntityManager()->persist($todoList);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * @param TodoList $todoList
+     *
+     * @return TodoList
+     */
+    public function update(TodoList $todoList)
+    {
+        $this->getEntityManager()->flush();
+
+        return $todoList;
+    }
 }

@@ -86,4 +86,34 @@ class TodoListItem
 
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function uncheck()
+    {
+        $this->setChecked(false);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function check()
+    {
+        $this->setChecked(true);
+
+        return $this;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function isId($id)
+    {
+        return (int) $this->id === (int) $id;
+    }
 }

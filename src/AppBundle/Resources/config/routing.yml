@@ -20,3 +20,21 @@ api_todo_list_detail:
         id: \d+
     options:
         expose: true
+
+api_todo_list_item_check:
+    path: /api/todo-list/{todoListId}/{todoListToken}/items/{id}/check.json
+    defaults: { _controller: controller.api.todo_list_item_check:checkAction, _format: json }
+    requirements:
+        todoListId: \d+
+        id: \d+
+    options:
+        expose: true
+
+api_todo_list_item_uncheck:
+    path: /api/todo-list/{todoListId}/{todoListToken}/items/{id}/uncheck.json
+    defaults: { _controller: controller.api.todo_list_item_check:uncheckAction, _format: json }
+    requirements:
+        todoListId: \d+
+        id: \d+
+    options:
+        expose: true

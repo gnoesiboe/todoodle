@@ -20,3 +20,9 @@ services:
         arguments:
             - '@repository.todo_list'
             - '@response.factory.todo_list'
+
+    controller.api.todo_list_item_check:
+        class: AppBundle\Controller\TodoListItemCheckedController
+        arguments:
+            - '@repository.todo_list'
+            - '@response.factory.todo_list_item'
