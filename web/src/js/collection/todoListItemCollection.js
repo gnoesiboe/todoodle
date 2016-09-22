@@ -20,6 +20,15 @@ class TodoListItemCollection {
     }
 
     /**
+     * @param {String} externalId
+     *
+     * @returns {number}
+     */
+    getIndexByExternalId(externalId) {
+        return this._items.findIndex((todoListItem) => todoListItem.externalId === externalId);
+    }
+
+    /**
      * @param {Number} index
      * @param {*=} defaultValue
      *
