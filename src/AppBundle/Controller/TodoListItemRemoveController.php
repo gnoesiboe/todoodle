@@ -2,22 +2,15 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\TodoList;
-use AppBundle\Entity\TodoListItem;
 use AppBundle\Repository\TodoListRepository;
 use AppBundle\Response\Factory\TodoListItemResponseFactory;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
  */
-final class TodoListItemRemoveController
+final class TodoListItemRemoveController extends Controller
 {
-    /**
-     * @var TodoListRepository
-     */
-    private $todoListRepository;
-
     /**
      * @var TodoListItemResponseFactory
      */
@@ -29,7 +22,8 @@ final class TodoListItemRemoveController
      */
     public function __construct(TodoListRepository $todoListRepository, TodoListItemResponseFactory $responseFactory)
     {
-        $this->todoListRepository = $todoListRepository;
+        parent::__construct($todoListRepository);
+
         $this->responseFactory = $responseFactory;
     }
 
@@ -50,39 +44,5 @@ final class TodoListItemRemoveController
         $this->todoListRepository->update($todoList);
 
         return $this->responseFactory->createRemovedResponse();
-    }
-
-    /**
-     * @param TodoList $todoList
-     * @param int $id
-     *
-     * @return TodoListItem
-     */
-    private function getItemFromTodoListOrThrow(TodoList $todoList, $id)
-    {
-        $todoListItem = $todoList->getItemWithId($id);
-
-        if (!$todoListItem instanceof TodoListItem) {
-            throw new NotFoundHttpException("Todo list {$todoList->getId()} does not contain an item with id: {$id}");
-        }
-
-        return $todoListItem;
-    }
-
-    /**
-     * @param int $id
-     * @param string $token
-     *
-     * @return TodoList
-     */
-    private function getTodoListOrThrow($id, $token)
-    {
-        $todoList = $this->todoListRepository->findOneByIdAndToken($id, $token);
-
-        if (!$todoList instanceof TodoList) {
-            throw new NotFoundHttpException("No todo list found with id: {$id} and token: {$token}");
-        }
-
-        return $todoList;
     }
 }
