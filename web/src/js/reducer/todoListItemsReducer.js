@@ -91,7 +91,7 @@ var _handleUncheckTodoListItemStartAction = function (currentState, action) {
  *
  * @private
  */
-var _handleImportTodoListItemAction = function (currentState, action) {
+var _handleImportOfUpdatedTodoListItemAction = function (currentState, action) {
     var unexpectedResponseMessage = 'Unexpected api response format';
 
     validatePropertyPathExists(action, 'payload.apiData.results', unexpectedResponseMessage);
@@ -168,7 +168,7 @@ export default function todoListItemsReducer(currentState = _defaultState, actio
 
         case actionType.CHECK_TODO_LIST_ITEM_IMPORT:
         case actionType.UNCHECK_TODO_LIST_ITEM_IMPORT:
-            return _handleImportTodoListItemAction(currentState, action);
+            return _handleImportOfUpdatedTodoListItemAction(currentState, action);
 
         case actionType.REMOVE_TODO_LIST_ITEM_START:
             return _handleRemoveTodoListItemStart(currentState, action);
