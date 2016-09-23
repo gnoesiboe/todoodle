@@ -1,6 +1,7 @@
 import React from 'react';
 import TodoListItemCollection from './../../collection/todoListItemCollection';
 import TodoListItem from './todoListItem';
+import AddTodoListItemForm from './addTodoListItemForm';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
@@ -14,6 +15,15 @@ class TodoList extends React.Component {
         return (
             <table className="table">
                 <thead>
+                    <tr>
+                        <td />
+                        <td>
+                            <AddTodoListItemForm
+                                onSubmit={ this.props.onTodoListItemCreate }
+                            />
+                        </td>
+                        <td />
+                    </tr>
                     <tr>
                         <th className="todo-list-thead-checked">#</th>
                         <th>Task</th>
@@ -43,7 +53,8 @@ class TodoList extends React.Component {
 TodoList.propTypes = {
     items: React.PropTypes.instanceOf(TodoListItemCollection).isRequired,
     onTodoCheckedChange: React.PropTypes.func.isRequired, //@todo rename to onTodoListItemCheckedChange
-    onTodoListItemRemove: React.PropTypes.func.isRequired
+    onTodoListItemRemove: React.PropTypes.func.isRequired,
+    onTodoListItemCreate: React.PropTypes.func.isRequired
 };
 
 export default TodoList;

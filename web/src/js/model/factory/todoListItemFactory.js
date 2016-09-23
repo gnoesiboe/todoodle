@@ -4,22 +4,21 @@ import uuid from 'uuid';
 import TodoListItem from './../todoListItem';
 
 /**
- * @param {Number} externalId
+ * @param {String} id
  * @param {String} title
+ * @param {Number=} externalId
  * @param {Boolean=} checked
  *
  * @returns {TodoListItem}
- *
- * @private
  */
-var _createModel = function (externalId, title, checked = false) {
+export function createModel(id, title, externalId = null, checked = false) {
     return new TodoListItem(
-        uuid(),
-        externalId,
+        id,
         title,
+        externalId,
         checked
     );
-};
+}
 
 /**
  * @param {Object} apiInput
@@ -33,9 +32,10 @@ export function createFromApiInput(apiInput) {
     validatePropertyPathExists(apiInput, 'title', unexpectedResponseMessage);
     validatePropertyPathExists(apiInput, 'checked', unexpectedResponseMessage);
 
-    return _createModel(
-        apiInput.id,
+    return createModel(
+        uuid(),
         apiInput.title,
+        apiInput.id,
         apiInput.checked
     );
 }

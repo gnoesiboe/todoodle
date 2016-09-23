@@ -5,14 +5,14 @@ class TodoListItem {
 
     /**
      * @param {String} id
-     * @param {Number} externalId
      * @param {String} title
+     * @param {Number=} externalId
      * @param {Boolean=} checked
      */
-    constructor(id, externalId, title, checked = false) {
+    constructor(id, title, externalId = null, checked = false) {
         this._id = id;
-        this._externalId = externalId;
         this._title = title;
+        this._externalId = externalId;
         this._checked = checked;
     }
 
@@ -24,7 +24,7 @@ class TodoListItem {
     }
 
     /**
-     * @returns {Number}
+     * @returns {Number|null}
      */
     get externalId() {
         return this._externalId;
@@ -64,8 +64,8 @@ class TodoListItem {
     clone() {
         return new TodoListItem(
             this._id,
-            this._externalId,
             this._title,
+            this._externalId,
             this._checked
         );
     }

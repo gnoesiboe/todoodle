@@ -65,6 +65,19 @@ class TodoListItemCollection {
     }
 
     /**
+     * @param {TodoListItem} todoListItem
+     * 
+     * @returns {TodoListItemCollection}
+     */
+    addItem(todoListItem) {
+        var newDataSet = this._items.map((todoListItem) => todoListItem.clone());
+
+        newDataSet.push(todoListItem);
+
+        return new TodoListItemCollection(newDataSet);
+    }
+
+    /**
      * @returns {TodoListItemCollection}
      */
     clone() {

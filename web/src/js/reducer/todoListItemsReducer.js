@@ -2,7 +2,7 @@ import TodoListItemCollection from './../collection/todoListItemCollection';
 import * as actionType from './../model/actionType';
 import { validatePropertyPathExists } from './../helper/objectHelper';
 import _ from 'lodash';
-import { createCollectionFromApiInput, createFromApiInput } from './../model/factory/todoListItemFactory';
+import { createCollectionFromApiInput, createFromApiInput, createModel } from './../model/factory/todoListItemFactory';
 
 /**
  * @type {TodoListItemCollection}
@@ -139,6 +139,20 @@ var _handleRemoveTodoListItemStart = function (currentState, action) {
  * @param {TodoListItemCollection} currentState
  * @param {Object} action
  *
+ * @return {TodoListItemCollection}
+ *
+ * @private
+ */
+var _handleTodoListItemStartAction = function (currentState, action) {
+    var newTodo = createModel(action.payload.id, action.payload.title);
+
+    return currentState.addItem(newTodo);
+};
+
+/**
+ * @param {TodoListItemCollection} currentState
+ * @param {Object} action
+ *
  * @returns {TodoListItemCollection}
  */
 export default function todoListItemsReducer(currentState = _defaultState, action) {
@@ -158,6 +172,9 @@ export default function todoListItemsReducer(currentState = _defaultState, actio
 
         case actionType.REMOVE_TODO_LIST_ITEM_START:
             return _handleRemoveTodoListItemStart(currentState, action);
+
+        case actionType.CREATE_TODO_LIST_ITEM_START:
+            return _handleTodoListItemStartAction(currentState, action);
     }
 
     return currentState;

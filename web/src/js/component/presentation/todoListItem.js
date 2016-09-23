@@ -9,6 +9,12 @@ class TodoListItem extends React.Component {
      * @private
      */
     _onCheckedChange() {
+        if (!this.props.externalId) {
+            console.warn('Item is not yet saved on the server');
+
+            return;
+        }
+
         this.props.onCheckedChange(this.props.id, this.props.externalId, !this.props.checked);
     }
 
@@ -19,6 +25,12 @@ class TodoListItem extends React.Component {
      */
     _onRemoveClick(event) {
         event.preventDefault();
+
+        if (!this.props.externalId) {
+            console.warn('Item is not yet saved on the server');
+
+            return;
+        }
 
         if (confirm('Are you sure?!')) {
             this.props.onRemove(this.props.id, this.props.externalId);
@@ -55,12 +67,13 @@ class TodoListItem extends React.Component {
 }
 
 TodoListItem.defaultProps = {
-    isChecked: false
+    isChecked: false,
+    externalId: null
 };
 
 TodoListItem.propTypes = {
     id: React.PropTypes.string.isRequired,
-    externalId: React.PropTypes.number.isRequired,
+    externalId: React.PropTypes.number,
     title: React.PropTypes.string.isRequired,
     checked: React.PropTypes.bool.isRequired,
     onCheckedChange: React.PropTypes.func.isRequired,

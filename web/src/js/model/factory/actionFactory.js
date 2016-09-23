@@ -61,6 +61,29 @@ var _createImportTodoListImportAction = function (id, apiData) {
 };
 
 /**
+ * @param {Number} externalId
+ * @param {String} token
+ *
+ * @returns {Function}
+ */
+export function createImportTodoListAction(externalId, token) {
+    return function (dispatch) {
+        var id = uuid();
+
+        dispatch(_createImportTodoListStartAction(id, externalId));
+
+        apiClient.getTodoList(externalId, token)
+            .then((apiData) => {
+                dispatch(_createImportTodoListImportAction(id, apiData));
+                dispatch(_createImportTodoListStopAction(id));
+            })
+            .catch((error) => {
+                dispatch(_createImportTodoListStopAction(id, error));
+            });
+    }
+}
+
+/**
  * @param {String} id
  *
  * @returns {Object}
@@ -243,24 +266,33 @@ export function createRemoveTodoListItemAction(externalTodoListId, todoListToken
 }
 
 /**
- * @param {Number} externalId
- * @param {String} token
+ * @param {String} id
+ * @param {String} title
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createCreateTodoListItemStartAction = function (id, title) {
+    return _createAction(actionType.CREATE_TODO_LIST_ITEM_START, {
+        id: id,
+        title: title
+    });
+};
+
+/**
+ * @param {Number} externalTodoListId
+ * @param {String} todoListToken
+ * @param {String} title
  *
  * @returns {Function}
  */
-export function createImportTodoListAction(externalId, token) {
+export function createCreateTodoListItemAction(externalTodoListId, todoListToken, title) {
+    var id = uuid();
+
     return function (dispatch) {
-        var id = uuid();
+        dispatch(_createCreateTodoListItemStartAction(id, title));
 
-        dispatch(_createImportTodoListStartAction(id, externalId));
-
-        apiClient.getTodoList(externalId, token)
-            .then((apiData) => {
-                dispatch(_createImportTodoListImportAction(id, apiData));
-                dispatch(_createImportTodoListStopAction(id));
-            })
-            .catch((error) => {
-                dispatch(_createImportTodoListStopAction(id, error));
-            });
+        //@todo save to api
     }
 }
