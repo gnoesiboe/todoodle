@@ -101,6 +101,20 @@ final class TodoList
     }
 
     /**
+     * @param TodoListItem $todoListItem
+     *
+     * @return $this
+     */
+    public function addItem(TodoListItem $todoListItem)
+    {
+        if (!$this->items->contains($todoListItem)) {
+            $this->items->add($todoListItem);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param int $id
      *
      * @return TodoListItem|null

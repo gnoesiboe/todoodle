@@ -1,0 +1,5 @@
+AppBundle\Entity\TodoListItem:
+    properties:
+        title:
+            - NotBlank: ~
+            - Length: { max: 255 }

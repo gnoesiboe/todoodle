@@ -50,3 +50,13 @@ api_todo_list_item_remove:
         id: \d+
     options:
         expose: true
+
+api_todo_list_item_create:
+    path: /api/todo-list/{todoListId}/{todoListToken}/items/create.json
+    defaults: { _controller: controller.api.todo_list_item_create:createAction, _format: json }
+    methods: POST
+    requirements:
+        todoListId: \d+
+        id: \d+
+    options:
+        expose: true

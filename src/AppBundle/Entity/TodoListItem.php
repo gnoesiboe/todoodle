@@ -31,12 +31,10 @@ class TodoListItem
 
     /**
      * @param TodoList $todoList
-     * @param $title
      */
-    public function __construct(TodoList $todoList, $title)
+    public function __construct(TodoList $todoList)
     {
         $this->todoList = $todoList;
-        $this->title = $title;
     }
 
     /**

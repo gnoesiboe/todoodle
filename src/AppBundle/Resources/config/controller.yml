@@ -32,3 +32,10 @@ services:
         arguments:
             - '@repository.todo_list'
             - '@response.factory.todo_list_item'
+
+    controller.api.todo_list_item_create:
+        class: AppBundle\Controller\TodoListItemCreateController
+        arguments:
+            - '@repository.todo_list'
+            - '@response.factory.todo_list_item'
+            - '@form.factory'
