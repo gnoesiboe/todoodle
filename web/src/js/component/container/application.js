@@ -25,6 +25,8 @@ class Application extends React.Component {
      * @param {Boolean} newChecked
      *
      * @private
+     *
+     * @todo rename to _onTodoListItemCheckedChange
      */
     _onTodoCheckedChange(id, externalId, newChecked) {
         var todoList = this.props.current.get('todoList');
@@ -34,6 +36,10 @@ class Application extends React.Component {
             : actionFactory.createUncheckTodoListItemAction(todoList.externalId, todoList.token, id, externalId);
 
         this.props.dispatch(action);
+    }
+
+    _onTodoListItemRemove(id, externalId) {
+        console.log('remove todo list item: ', id, externalId);
     }
 
     /**
@@ -49,6 +55,7 @@ class Application extends React.Component {
                     <TodoList
                         items={ todoListItems }
                         onTodoCheckedChange={ this._onTodoCheckedChange.bind(this) }
+                        onTodoListItemRemove={ this._onTodoListItemRemove.bind(this) }
                     />
                 </div>
             </div>

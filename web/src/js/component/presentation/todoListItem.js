@@ -13,27 +13,43 @@ class TodoListItem extends React.Component {
     }
 
     /**
+     * @param {Event} event
+     *
+     * @private
+     */
+    _onRemoveClick(event) {
+        event.preventDefault();
+
+        if (confirm('Are you sure?!')) {
+            this.props.onRemove(this.props.id, this.props.externalId);
+        }
+    }
+
+    /**
      * @returns {XML}
      */
     render() {
-        var { checked, title } = this.props;
+        var { id, checked, title } = this.props,
+            checkboxId = `todo_list_item_${id}_checkbox`;
 
         return (
-            <div className="row todo-list-item">
-                <form className="form-inline">
-                    <div className="checkbox">
-                        <label>
-                            <input
-                                type="checkbox"
-                                onChange={ this._onCheckedChange.bind(this) }
-                                className="todo-list-item-checked"
-                                checked={ checked }
-                            />
-                            <span className="todo-list-item-title">{ title }</span>
-                        </label>
-                    </div>
-                </form>
-            </div>
+            <tr className="todo-list-item">
+                <td>
+                    <input
+                        type="checkbox"
+                        onChange={ this._onCheckedChange.bind(this) }
+                        className="todo-list-item-checked"
+                        id={ checkboxId }
+                        checked={ checked }
+                    />
+                </td>
+                <td>
+                    <label className="todo-list-item-title" htmlFor={ `todo_list_item_${id}_checkbox` }>{ title }</label>
+                </td>
+                <td>
+                    <a href="#" onClick={ this._onRemoveClick.bind(this) } className="todo-list-item-remove">x</a>
+                </td>
+            </tr>
         );
     }
 }
@@ -47,7 +63,8 @@ TodoListItem.propTypes = {
     externalId: React.PropTypes.number.isRequired,
     title: React.PropTypes.string.isRequired,
     checked: React.PropTypes.bool.isRequired,
-    onCheckedChange: React.PropTypes.func.isRequired
+    onCheckedChange: React.PropTypes.func.isRequired,
+    onRemove: React.PropTypes.func.isRequired
 };
 
 export default TodoListItem;

@@ -1,12 +1,10 @@
-.todo-list-item {
-    position: relative;
-}
+.todo-list {
 
-    .todo-list-item-checked {
-        position: absolute;
-        left: 4px;
+}
+    .todo-list-thead-checked {
+        width: 30px;
     }
 
-    .todo-list-item-title {
-        padding-left: 15px;
+    .todo-list-thead-actions {
+        width: 20px;
     }
