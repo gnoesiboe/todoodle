@@ -18,3 +18,4 @@ AppBundle\Entity\TodoListItem:
                 name: todo_list_id
                 referencedColumnName: id
                 onDelete: cascade
+                nullable: false
