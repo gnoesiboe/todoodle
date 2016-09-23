@@ -121,6 +121,24 @@ var _handleImportTodoListItemAction = function (currentState, action) {
  * @param {TodoListItemCollection} currentState
  * @param {Object} action
  *
+ * @return {TodoListItemCollection}
+ *
+ * @private
+ */
+var _handleRemoveTodoListItemStart = function (currentState, action) {
+    var index = currentState.getIndexById(action.payload.id);
+
+    if (index === -1) {
+        throw new Error(`Handling action '${action.type}' for non existent todo list item with  id: ${action.payload.id}`);
+    }
+
+    return currentState.removeAtIndex(index);
+};
+
+/**
+ * @param {TodoListItemCollection} currentState
+ * @param {Object} action
+ *
  * @returns {TodoListItemCollection}
  */
 export default function todoListItemsReducer(currentState = _defaultState, action) {
@@ -137,6 +155,9 @@ export default function todoListItemsReducer(currentState = _defaultState, actio
         case actionType.CHECK_TODO_LIST_ITEM_IMPORT:
         case actionType.UNCHECK_TODO_LIST_ITEM_IMPORT:
             return _handleImportTodoListItemAction(currentState, action);
+
+        case actionType.REMOVE_TODO_LIST_ITEM_START:
+            return _handleRemoveTodoListItemStart(currentState, action);
     }
 
     return currentState;

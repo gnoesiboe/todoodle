@@ -193,6 +193,56 @@ export function createUncheckTodoListItemAction(externalTodoListId, todoListToke
 }
 
 /**
+ * @param {String} id
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createRemoveTodoListItemStartAction = function (id) {
+    return _createAction(actionType.REMOVE_TODO_LIST_ITEM_START, {
+        id: id
+    });
+};
+
+/**
+ * @param {String} id
+ * @param {Error=} error
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createRemoveTodoListItemStopAction = function (id, error = null) {
+    return _createAction(actionType.REMOVE_TODO_LIST_ITEM_STOP, {
+        id: id,
+        error: error
+    })
+};
+
+/**
+ * @param {Number} externalTodoListId
+ * @param {String} todoListToken
+ * @param {String} id
+ * @param {Number} externalId
+ *
+ * @returns {Function}
+ */
+export function createRemoveTodoListItemAction(externalTodoListId, todoListToken, id, externalId) {
+    return function (dispatch) {
+        dispatch(_createRemoveTodoListItemStartAction(id));
+
+        apiClient.removeTodoListItem(externalTodoListId, todoListToken, externalId)
+            .then(() => {
+                dispatch(_createRemoveTodoListItemStopAction(id));
+            })
+            .catch((error) => {
+                dispatch(_createRemoveTodoListItemStopAction(id, error));
+            });
+    }
+}
+
+/**
  * @param {Number} externalId
  * @param {String} token
  *

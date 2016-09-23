@@ -74,6 +74,19 @@ var _executePut = function (url) {
 };
 
 /**
+ * @param {String} url
+ *
+ * @returns {Promise}
+ *
+ * @private
+ */
+var _executeDelete = function (url) {
+    return _execute(url, {
+        method: 'delete'
+    });
+};
+
+/**
  * @param {Number} todoListId
  * @param {String} todoListToken
  * @param {Number} id
@@ -113,6 +126,29 @@ export function uncheckTodoListItem(todoListId, todoListToken, id) {
             });
 
             _executePut(url)
+                .then((json) => resolve(json))
+                .catch((error) => reject(error));
+        }
+    )
+}
+
+/**
+ * @param {Number} todoListId
+ * @param {String} todoListToken
+ * @param {Number} id
+ *
+ * @returns {Promise}
+ */
+export function removeTodoListItem(todoListId, todoListToken, id) {
+    return new Promise(
+        function (resolve, reject) {
+            var url = window.Routing.generate('api_todo_list_item_remove', {
+                todoListId: todoListId,
+                todoListToken: todoListToken,
+                id: id
+            });
+
+            _executeDelete(url)
                 .then((json) => resolve(json))
                 .catch((error) => reject(error));
         }

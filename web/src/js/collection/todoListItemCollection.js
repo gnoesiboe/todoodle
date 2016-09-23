@@ -52,6 +52,19 @@ class TodoListItemCollection {
     }
 
     /**
+     * @param {Number} index
+     *
+     * @returns {TodoListItemCollection}
+     */
+    removeAtIndex(index) {
+        var newDataSet = this._items.map((todoListItem) => todoListItem.clone());
+
+        newDataSet.splice(index, 1);
+
+        return new TodoListItemCollection(newDataSet);
+    }
+
+    /**
      * @returns {TodoListItemCollection}
      */
     clone() {

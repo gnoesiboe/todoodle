@@ -38,8 +38,18 @@ class Application extends React.Component {
         this.props.dispatch(action);
     }
 
+    /**
+     * @param {String} id
+     * @param {Number} externalId
+     *
+     * @private
+     */
     _onTodoListItemRemove(id, externalId) {
-        console.log('remove todo list item: ', id, externalId);
+        var todoList = this.props.current.get('todoList');
+
+        this.props.dispatch(
+            actionFactory.createRemoveTodoListItemAction(todoList.externalId, todoList.token, id, externalId)
+        );
     }
 
     /**

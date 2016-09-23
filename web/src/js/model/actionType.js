@@ -9,3 +9,6 @@ export const CHECK_TODO_LIST_ITEM_STOP = 'check_todo_list_item_stop';
 export const UNCHECK_TODO_LIST_ITEM_START = 'uncheck_todo_list_item_start';
 export const UNCHECK_TODO_LIST_ITEM_IMPORT = 'uncheck_todo_list_item_import';
 export const UNCHECK_TODO_LIST_ITEM_STOP = 'uncheck_todo_list_item_stop';
+
+export const REMOVE_TODO_LIST_ITEM_START = 'remove_todo_list_item_start';
+export const REMOVE_TODO_LIST_ITEM_STOP = 'remove_todo_list_item_stop';
