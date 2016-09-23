@@ -87,6 +87,29 @@ var _executeDelete = function (url) {
 };
 
 /**
+ * @param {String} url
+ * @param {Object} body
+ *
+ * @returns {Promise}
+ *
+ * @private
+ */
+var _executePost = function (url, body) {
+    var formData = new FormData();
+
+    for (let key in body) {
+        if (body.hasOwnProperty(key)) {
+            formData.append(key, body[key]);
+        }
+    }
+
+    return _execute(url, {
+        method: 'post',
+        body: formData
+    });
+};
+
+/**
  * @param {Number} todoListId
  * @param {String} todoListToken
  * @param {Number} id
@@ -126,6 +149,32 @@ export function uncheckTodoListItem(todoListId, todoListToken, id) {
             });
 
             _executePut(url)
+                .then((json) => resolve(json))
+                .catch((error) => reject(error));
+        }
+    )
+}
+
+/**
+ * @param {Number} todoListId
+ * @param {String} todoListToken
+ * @param {String} title
+ *
+ * @returns {Promise}
+ */
+export function createTodoListItem(todoListId, todoListToken, title) {
+    return new Promise(
+        function (resolve, reject) {
+            var url = window.Routing.generate('api_todo_list_item_create', {
+                todoListId: todoListId,
+                todoListToken: todoListToken
+            });
+
+            var body = {
+                title: title
+            };
+
+            _executePost(url, body)
                 .then((json) => resolve(json))
                 .catch((error) => reject(error));
         }

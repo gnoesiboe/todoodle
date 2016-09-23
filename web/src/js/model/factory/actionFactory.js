@@ -281,6 +281,36 @@ var _createCreateTodoListItemStartAction = function (id, title) {
 };
 
 /**
+ * @param {String} id
+ * @param {Object} apiData
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createCreateTodoListItemImportAction = function (id, apiData) {
+    return _createAction(actionType.CREATE_TODO_LIST_ITEM_IMPORT, {
+        id: id,
+        apiData: apiData
+    });
+};
+
+/**
+ * @param {String} id
+ * @param {Error=} error
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createCreateTodoListItemStopAction = function (id, error = null) {
+    return _createAction(actionType.CREATE_TODO_LIST_ITEM_STOP, {
+        id: id,
+        error: error
+    });
+};
+
+/**
  * @param {Number} externalTodoListId
  * @param {String} todoListToken
  * @param {String} title
@@ -293,6 +323,13 @@ export function createCreateTodoListItemAction(externalTodoListId, todoListToken
     return function (dispatch) {
         dispatch(_createCreateTodoListItemStartAction(id, title));
 
-        //@todo save to api
+        apiClient.createTodoListItem(externalTodoListId, todoListToken, title)
+            .then((apiData) => {
+                dispatch(_createCreateTodoListItemImportAction(id, apiData));
+                dispatch(_createCreateTodoListItemStopAction(id));
+            })
+            .catch((error) => {
+                dispatch(_createCreateTodoListItemStopAction(id, error));
+            });
     }
 }
