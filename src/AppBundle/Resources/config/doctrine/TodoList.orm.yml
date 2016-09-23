@@ -17,3 +17,4 @@ AppBundle\Entity\TodoList:
             targetEntity: AppBundle\Entity\TodoListItem
             mappedBy: todoList
             cascade: ['all']
+            orphanRemoval: true

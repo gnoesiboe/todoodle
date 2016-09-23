@@ -87,6 +87,20 @@ final class TodoList
     }
 
     /**
+     * @param TodoListItem $todoListItem
+     *
+     * @return $this
+     */
+    public function removeItem(TodoListItem $todoListItem)
+    {
+        if ($this->items->contains($todoListItem)) {
+            $this->items->removeElement($todoListItem);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param int $id
      *
      * @return TodoListItem|null

@@ -40,3 +40,13 @@ api_todo_list_item_uncheck:
         id: \d+
     options:
         expose: true
+
+api_todo_list_item_remove:
+    path: /api/todo-list/{todoListId}/{todoListToken}/items/{id}/remove.json
+    defaults: { _controller: controller.api.todo_list_item_remove:removeAction, _format: json }
+    methods: DELETE
+    requirements:
+        todoListId: \d+
+        id: \d+
+    options:
+        expose: true

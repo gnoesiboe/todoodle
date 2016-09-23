@@ -39,4 +39,16 @@ final class TodoListItemResponseFactory
             ]
         ]);
     }
+
+    /**
+     * @return JsonResponse
+     */
+    public function createRemovedResponse()
+    {
+        return new JsonResponse([
+            'action' => [
+                'success' => true
+            ]
+        ]);
+    }
 }
