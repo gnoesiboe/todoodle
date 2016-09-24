@@ -53,6 +53,33 @@ class TodoListItemCollection {
 
     /**
      * @param {Number} index
+     * @param {TodoListItem} incomingTodoListItem
+     *
+     * @returns {TodoListItemCollection}
+     */
+    mergeAtIndex(index, incomingTodoListItem) {
+        if (!this.hasIndex(index)) {
+            throw new Error('Could not merge todo list item as index does not exist');
+        }
+
+        var newTodoListItem = this._items[index].clone();
+
+        newTodoListItem.externalId = incomingTodoListItem.externalId;
+
+        return this.insertAtIndex(index, newTodoListItem);
+    }
+
+    /**
+     * @param {Number} index
+     *
+     * @returns {boolean}
+     */
+    hasIndex(index) {
+        return this._items[index] !== 'undefined';
+    }
+
+    /**
+     * @param {Number} index
      *
      * @returns {TodoListItemCollection}
      */

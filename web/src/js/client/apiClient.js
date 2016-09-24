@@ -159,16 +159,22 @@ export function uncheckTodoListItem(todoListId, todoListToken, id) {
  * @param {Number} todoListId
  * @param {String} todoListToken
  * @param {String} title
+ * @param {String} id
  *
  * @returns {Promise}
  */
-export function createTodoListItem(todoListId, todoListToken, title) {
+export function createTodoListItem(todoListId, todoListToken, title, id) {
     return new Promise(
         function (resolve, reject) {
             var url = window.Routing.generate('api_todo_list_item_create', {
                 todoListId: todoListId,
                 todoListToken: todoListToken
             });
+
+            // pass our client-side id to the server to receive it back as external reference
+            // we do this so we can match the incoming TodoListItem with the one we already have
+            // in memory, to be able to merge the results.
+            url += `?external_reference=${id}`;
 
             var body = {
                 title: title

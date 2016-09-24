@@ -125,6 +125,43 @@ var _handleImportOfUpdatedTodoListItemAction = function (currentState, action) {
  *
  * @private
  */
+var _handleCreateTodoListItemImportAction = function (currentState, action) {
+    var unexpectedResponseMessage = 'Unexpected api response format';
+
+    validatePropertyPathExists(action, 'payload.apiData.externalReference', unexpectedResponseMessage);
+
+    var id = action.payload.apiData.externalReference;
+
+    validatePropertyPathExists(action, 'payload.apiData.results', unexpectedResponseMessage);
+
+    var results = action.payload.apiData.results;
+
+    if (!_.isArray(results) || typeof results[0] === 'undefined') {
+        throw new Error('Unexpected api response format');
+    }
+
+    var result = results[0];
+
+    validatePropertyPathExists(result, 'todoListItem', unexpectedResponseMessage);
+
+    var incomingTodoListItem = createFromApiInput(result.todoListItem),
+        atIndex = currentState.getIndexById(id);
+
+    if (atIndex === -1) {
+        throw new Error(`Handling action '${action.type}' for non existent todo list item with external id: ${incomingTodoListItem.externalId}`);
+    }
+
+    return currentState.mergeAtIndex(atIndex, incomingTodoListItem);
+};
+
+/**
+ * @param {TodoListItemCollection} currentState
+ * @param {Object} action
+ *
+ * @return {TodoListItemCollection}
+ *
+ * @private
+ */
 var _handleRemoveTodoListItemStart = function (currentState, action) {
     var index = currentState.getIndexById(action.payload.id);
 
@@ -175,6 +212,9 @@ export default function todoListItemsReducer(currentState = _defaultState, actio
 
         case actionType.CREATE_TODO_LIST_ITEM_START:
             return _handleTodoListItemStartAction(currentState, action);
+
+        case actionType.CREATE_TODO_LIST_ITEM_IMPORT:
+            return _handleCreateTodoListItemImportAction(currentState, action);
     }
 
     return currentState;

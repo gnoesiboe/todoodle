@@ -323,7 +323,7 @@ export function createCreateTodoListItemAction(externalTodoListId, todoListToken
     return function (dispatch) {
         dispatch(_createCreateTodoListItemStartAction(id, title));
 
-        apiClient.createTodoListItem(externalTodoListId, todoListToken, title)
+        apiClient.createTodoListItem(externalTodoListId, todoListToken, title, id)
             .then((apiData) => {
                 dispatch(_createCreateTodoListItemImportAction(id, apiData));
                 dispatch(_createCreateTodoListItemStopAction(id));

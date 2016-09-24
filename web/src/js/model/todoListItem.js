@@ -31,6 +31,13 @@ class TodoListItem {
     }
 
     /**
+     * @param {Number|null} externalId
+     */
+    set externalId(externalId) {
+        this._externalId = externalId;
+    }
+
+    /**
      * @returns {String}
      */
     get title() {
