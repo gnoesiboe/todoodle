@@ -53,6 +53,8 @@ final class TodoListItemCreateController extends Controller
     {
         $todoList = $this->getTodoListOrThrow($todoListId, $todoListToken);
 
+        $externalReference = $request->query->get('external_reference', null);
+
         $todoListItem = new TodoListItem($todoList);
 
         $form = $this->formFactory->createNamed(null, TodoListItemType::class, $todoListItem, [
@@ -71,6 +73,6 @@ final class TodoListItemCreateController extends Controller
             $this->todoListRepository->update($todoList);
         }
 
-        return $this->responseFactory->createDetailResponse($todoListItem);
+        return $this->responseFactory->createDetailResponse($todoListItem, $externalReference);
     }
 }

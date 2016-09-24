@@ -26,17 +26,19 @@ final class TodoListItemResponseFactory
 
     /**
      * @param TodoListItem $todoListItem
+     * @param string|null $externalReference
      *
      * @return JsonResponse
      */
-    public function createDetailResponse(TodoListItem $todoListItem)
+    public function createDetailResponse(TodoListItem $todoListItem, $externalReference = null)
     {
         return new JsonResponse([
             'results' => [
                 [
                     'todoListItem' => $this->createListBody($todoListItem)
                 ]
-            ]
+            ],
+            'externalReference' => $externalReference
         ]);
     }
 
