@@ -29,7 +29,7 @@ class Application extends React.Component {
      * @todo rename to _onTodoListItemCheckedChange
      */
     _onTodoCheckedChange(id, externalId, newChecked) {
-        var todoList = this.props.current.get('todoList');
+        var todoList = this.props.current.todoList;
 
         var action = newChecked
             ? actionFactory.createCheckTodoListItemAction(todoList.externalId, todoList.token, id, externalId)
@@ -45,7 +45,7 @@ class Application extends React.Component {
      * @private
      */
     _onTodoListItemRemove(id, externalId) {
-        var todoList = this.props.current.get('todoList');
+        var todoList = this.props.current.todoList;
 
         this.props.dispatch(
             actionFactory.createRemoveTodoListItemAction(todoList.externalId, todoList.token, id, externalId)
@@ -58,7 +58,7 @@ class Application extends React.Component {
      * @private
      */
     _onTodoListItemCreate(title) {
-        var todoList = this.props.current.get('todoList');
+        var todoList = this.props.current.todoList;
 
         this.props.dispatch(
             actionFactory.createCreateTodoListItemAction(todoList.externalId, todoList.token, title)
@@ -73,7 +73,7 @@ class Application extends React.Component {
      * @private
      */
     _onTodoListItemEdit(id, externalId, title) {
-        var todoList = this.props.current.get('todoList');
+        var todoList = this.props.current.todoList;
 
         this.props.dispatch(
             actionFactory.createEditTodoListItemAction(todoList.externalId, todoList.token, id, externalId, title)
@@ -81,21 +81,34 @@ class Application extends React.Component {
     }
 
     /**
+     * @param {String} id
+     *
+     * @private
+     */
+    _onTodoListItemClick(id) {
+        this.props.dispatch(
+            actionFactory.createSetCurrentTodoListItemAction(id)
+        )
+    }
+
+    /**
      * @returns {XML}
      */
     render() {
         var { current, todoListItems } = this.props,
-            todoList = current.get('todoList');
+            currentTodoListItemId = current.todoListItemId;
 
         return (
             <div className="row">
-                <div className="col-sm-12">
+                <div className={ currentTodoListItemId ? 'col-sm-6' : 'col-sm-12' }>
                     <TodoList
                         items={ todoListItems }
                         onTodoCheckedChange={ this._onTodoCheckedChange.bind(this) }
                         onTodoListItemRemove={ this._onTodoListItemRemove.bind(this) }
                         onTodoListItemCreate={ this._onTodoListItemCreate.bind(this) }
                         onTodoListItemEdit={ this._onTodoListItemEdit.bind(this) }
+                        onTodoListItemClick={ this._onTodoListItemClick.bind(this) }
+                        currentTodoListItemId={ currentTodoListItemId }
                     />
                 </div>
             </div>

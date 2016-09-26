@@ -1,24 +1,22 @@
 import * as actionType from './../model/actionType';
-import { Map } from 'immutable';
 import * as todoListFactory from './../model/factory/todoListFactory';
 import { validatePropertyPathExists } from './../helper/objectHelper';
 import _ from 'lodash';
+import CurrentMap from './../map/currentMap';
 
 /**
- * @type {Map}
+ * @type {CurrentMap}
  *
  * @private
  */
-var _defaultState = Map({
-    todoList: null
-});
+var _defaultState = new CurrentMap();
 
 /**
- * @param {Map} currentState
+ * @param {CurrentMap} currentState
  *
  * @param {Object} action
  *
- * @returns {Map}
+ * @returns {CurrentMap}
  *
  * @private
  */
@@ -37,23 +35,25 @@ var _handleImportTodoListImportAction = function (currentState, action) {
 
     validatePropertyPathExists(result, 'todoList', unexpectedResponseMessage);
 
-    return currentState.set(
-        'todoList',
+    return currentState.setTodoList(
         todoListFactory.createFromApiData(result.todoList)
     );
 };
 
 /**
- * @param {Map} currentState
+ * @param {CurrentMap} currentState
  *
  * @param {Object} action
  *
- * @returns {Map}
+ * @returns {CurrentMap}
  */
 export default function currentReducer(currentState = _defaultState, action) {
     switch (action.type) {
         case actionType.IMPORT_TODO_LIST_IMPORT:
             return _handleImportTodoListImportAction(currentState, action);
+
+        case actionType.SET_CURRENT_TODO_LIST_ITEM:
+            return currentState.setTodoListItemId(action.payload.id);
     }
 
     return currentState;

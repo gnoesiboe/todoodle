@@ -12,3 +12,11 @@
     .todo-list-thead-actions {
         width: 50px;
     }
+
+.todo-list-item {
+
+}
+
+    .todo-list-item--current {
+        background-color: #ffcc00;
+    }

@@ -400,3 +400,14 @@ export function createEditTodoListItemAction(externalTodoListId, todoListToken, 
             });
     };
 }
+
+/**
+ * @param {String} id
+ *
+ * @returns {Object}
+ */
+export function createSetCurrentTodoListItemAction(id) {
+    return _createAction(actionType.SET_CURRENT_TODO_LIST_ITEM, {
+        id: id
+    })
+}

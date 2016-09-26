@@ -43,6 +43,18 @@ class TodoList {
     get createdAt() {
         return this._createdAt;
     }
+
+    /**
+     * @returns {TodoList}
+     */
+    clone() {
+        return new TodoList(
+            this._id,
+            this._externalId,
+            this._token,
+            this._createdAt
+        );
+    }
 }
 
 export default TodoList

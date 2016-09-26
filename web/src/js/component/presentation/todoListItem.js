@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 const MODE_VIEW = 'view';
 const MODE_EDIT = 'edit';
@@ -73,6 +74,13 @@ class TodoListItem extends React.Component {
     }
 
     /**
+     * @private
+     */
+    _onClick() {
+        this.props.onClick(this.props.id);
+    }
+
+    /**
      * @returns {XML}
      *
      * @private
@@ -82,7 +90,7 @@ class TodoListItem extends React.Component {
             checkboxId = `todo_list_item_${id}_checkbox`;
 
         return (
-            <tr className="todo-list-item">
+            <tr className={ this._defineContainerClassName() } onClick={ this._onClick.bind(this) }>
                 <td>
                     <input
                         type="checkbox"
@@ -142,7 +150,7 @@ class TodoListItem extends React.Component {
      */
     _renderEditMode() {
         return (
-            <tr className="todo-list-item">
+            <tr className={ this._defineContainerClassName() }>
                 <td />
                 <td>
                     <EditTodoListItemForm
@@ -154,6 +162,18 @@ class TodoListItem extends React.Component {
                 <td />
             </tr>
         )
+    }
+
+    /**
+     * @returns {String}
+     *
+     * @private
+     */
+    _defineContainerClassName() {
+        return classNames({
+            'todo-list-item': true,
+            'todo-list-item--current': this.props.isCurrent
+        });
     }
 
     /**
@@ -175,7 +195,8 @@ class TodoListItem extends React.Component {
 
 TodoListItem.defaultProps = {
     isChecked: false,
-    externalId: null
+    externalId: null,
+    isCurrent: false
 };
 
 TodoListItem.propTypes = {
@@ -185,7 +206,9 @@ TodoListItem.propTypes = {
     checked: React.PropTypes.bool.isRequired,
     onCheckedChange: React.PropTypes.func.isRequired,
     onRemove: React.PropTypes.func.isRequired,
-    onEdit: React.PropTypes.func.isRequired
+    onEdit: React.PropTypes.func.isRequired,
+    onClick: React.PropTypes.func.isRequired,
+    isCurrent: React.PropTypes.bool.isRequired
 };
 
 export default TodoListItem;
