@@ -39,3 +39,10 @@ services:
             - '@repository.todo_list'
             - '@response.factory.todo_list_item'
             - '@form.factory'
+
+    controller.api.todo_list_item_edit:
+        class: AppBundle\Controller\TodoListItemEditController
+        arguments:
+            - '@repository.todo_list'
+            - '@response.factory.todo_list_item'
+            - '@form.factory'

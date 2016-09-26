@@ -21,7 +21,8 @@ final class TodoListItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => TodoListItem::class
+            'data_class' => TodoListItem::class,
+            'csrf_protection' => false
         ]);
     }
 }

@@ -57,6 +57,15 @@ api_todo_list_item_create:
     methods: POST
     requirements:
         todoListId: \d+
+    options:
+        expose: true
+
+api_todo_list_item_edit:
+    path: /api/todo-list/{todoListId}/{todoListToken}/items/{id}/edit.json
+    defaults: { _controller: controller.api.todo_list_item_edit:editAction, _format: json }
+    methods: PUT
+    requirements:
+        todoListId: \d+
         id: \d+
     options:
         expose: true
