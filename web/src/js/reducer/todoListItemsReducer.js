@@ -190,6 +190,28 @@ var _handleTodoListItemStartAction = function (currentState, action) {
  * @param {TodoListItemCollection} currentState
  * @param {Object} action
  *
+ * @return {TodoListItemCollection}
+ *
+ * @private
+ */
+var _handleEditTodoListItemStartAction = function (currentState, action) {
+    var index = currentState.getIndexById(action.payload.id);
+
+    if (index === -1) {
+        throw new Error(`Handling action '${action.type}' for non existent todo list item with  id: ${action.payload.id}`);
+    }
+
+    var newTodoListItem = currentState.getOneWithIndex(index).clone();
+
+    newTodoListItem.title = action.payload.title;
+
+    return currentState.insertAtIndex(index, newTodoListItem);
+};
+
+/**
+ * @param {TodoListItemCollection} currentState
+ * @param {Object} action
+ *
  * @returns {TodoListItemCollection}
  */
 export default function todoListItemsReducer(currentState = _defaultState, action) {
@@ -215,6 +237,9 @@ export default function todoListItemsReducer(currentState = _defaultState, actio
 
         case actionType.CREATE_TODO_LIST_ITEM_IMPORT:
             return _handleCreateTodoListItemImportAction(currentState, action);
+
+        case actionType.EDIT_TODO_LIST_ITEM_START:
+            return _handleEditTodoListItemStartAction(currentState, action);
     }
 
     return currentState;

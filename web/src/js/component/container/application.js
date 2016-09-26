@@ -66,6 +66,21 @@ class Application extends React.Component {
     }
 
     /**
+     * @param {String} id
+     * @param {Number} externalId
+     * @param {String} title
+     *
+     * @private
+     */
+    _onTodoListItemEdit(id, externalId, title) {
+        var todoList = this.props.current.get('todoList');
+
+        this.props.dispatch(
+            actionFactory.createEditTodoListItemAction(todoList.externalId, todoList.token, id, externalId, title)
+        );
+    }
+
+    /**
      * @returns {XML}
      */
     render() {
@@ -80,6 +95,7 @@ class Application extends React.Component {
                         onTodoCheckedChange={ this._onTodoCheckedChange.bind(this) }
                         onTodoListItemRemove={ this._onTodoListItemRemove.bind(this) }
                         onTodoListItemCreate={ this._onTodoListItemCreate.bind(this) }
+                        onTodoListItemEdit={ this._onTodoListItemEdit.bind(this) }
                     />
                 </div>
             </div>

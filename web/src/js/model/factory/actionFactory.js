@@ -333,3 +333,70 @@ export function createCreateTodoListItemAction(externalTodoListId, todoListToken
             });
     }
 }
+
+/**
+ * @param {String} id
+ * @param {String} title
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createEditTodoListItemStartAction = function (id, title) {
+    return _createAction(actionType.EDIT_TODO_LIST_ITEM_START, {
+        id: id,
+        title: title
+    });
+};
+
+/**
+ * @param {String} id
+ * @param {Object} apiData
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createEditTodoListItemImportAction = function (id, apiData) {
+    return _createAction(actionType.EDIT_TODO_LIST_ITEM_IMPORT, {
+        id: id,
+        apiData: apiData
+    });
+};
+
+/**
+ * @param {String} id
+ * @param {Error=} error
+ *
+ * @returns {Object}
+ *
+ * @private
+ */
+var _createEditTodoListItemStopAction = function (id, error = null) {
+    return _createAction(actionType.EDIT_TODO_LIST_ITEM_STOP, {
+        id: id,
+        error: error
+    });
+};
+
+/**
+ * @param {Number} externalTodoListId
+ * @param {String} todoListToken
+ * @param {String} id
+ * @param {Number} externalTodoListItemId
+ * @param {String} title
+ */
+export function createEditTodoListItemAction(externalTodoListId, todoListToken, id, externalTodoListItemId, title) {
+    return function (dispatch) {
+        dispatch(_createEditTodoListItemStartAction(id, title));
+
+        apiClient.editTodoListItem(externalTodoListId, todoListToken, externalTodoListItemId, title)
+            .then((apiData) => {
+                dispatch(_createEditTodoListItemImportAction(id, apiData));
+                dispatch(_createEditTodoListItemStopAction(id));
+            })
+            .catch((error) => {
+                dispatch(_createEditTodoListItemStopAction(id, error));
+            });
+    };
+}

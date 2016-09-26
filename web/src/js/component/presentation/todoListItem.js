@@ -1,9 +1,25 @@
 import React from 'react';
 
+const MODE_VIEW = 'view';
+const MODE_EDIT = 'edit';
+
+import EditTodoListItemForm from './editTodoListItemForm';
+
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
  */
 class TodoListItem extends React.Component {
+
+    /**
+     * @param {Object} props
+     */
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            mode: MODE_VIEW
+        };
+    }
 
     /**
      * @private
@@ -38,9 +54,30 @@ class TodoListItem extends React.Component {
     }
 
     /**
-     * @returns {XML}
+     * @param {Event} event
+     *
+     * @private
      */
-    render() {
+    _onEditClick(event) {
+        event.preventDefault();
+
+        if (!this.props.externalId) {
+            console.warn('Item not yet saved on the server');
+
+            return;
+        }
+
+        this.setState({
+            mode: MODE_EDIT
+        });
+    }
+
+    /**
+     * @returns {XML}
+     *
+     * @private
+     */
+    _renderViewMode() {
         var { id, checked, title } = this.props,
             checkboxId = `todo_list_item_${id}_checkbox`;
 
@@ -59,10 +96,80 @@ class TodoListItem extends React.Component {
                     <label className="todo-list-item-title" htmlFor={ `todo_list_item_${id}_checkbox` }>{ title }</label>
                 </td>
                 <td>
-                    <a href="#" onClick={ this._onRemoveClick.bind(this) } className="todo-list-item-remove">x</a>
+                    <ul className="list-inline">
+                        <li>
+                            <a href="#" onClick={ this._onEditClick.bind(this) }>e</a>
+                        </li>
+                        <li>
+                            <a href="#" onClick={ this._onRemoveClick.bind(this) }>x</a>
+                        </li>
+                    </ul>
                 </td>
             </tr>
         );
+    }
+
+    /**
+     * @param {String} title
+     *
+     * @private
+     */
+    _onEdit(title) {
+        this.props.onEdit(
+            this.props.id,
+            this.props.externalId,
+            title
+        );
+
+        this.setState({
+            mode: MODE_VIEW
+        });
+    }
+
+    /**
+     * @private
+     */
+    _onEditCancel() {
+        this.setState({
+            mode:MODE_VIEW
+        });
+    }
+
+    /**
+     * @returns {XML}
+     *
+     * @private
+     */
+    _renderEditMode() {
+        return (
+            <tr className="todo-list-item">
+                <td />
+                <td>
+                    <EditTodoListItemForm
+                        title={ this.props.title }
+                        onEdit={ this._onEdit.bind(this) }
+                        onCancel={ this._onEditCancel.bind(this) }
+                    />
+                </td>
+                <td />
+            </tr>
+        )
+    }
+
+    /**
+     * @returns {XML}
+     */
+    render() {
+        switch (this.state.mode) {
+            case MODE_VIEW:
+                return this._renderViewMode();
+
+            case MODE_EDIT:
+                return this._renderEditMode();
+
+            default:
+                throw new Error(`Mode: '${this.state.mode}' not supported`);
+        }
     }
 }
 
@@ -77,7 +184,8 @@ TodoListItem.propTypes = {
     title: React.PropTypes.string.isRequired,
     checked: React.PropTypes.bool.isRequired,
     onCheckedChange: React.PropTypes.func.isRequired,
-    onRemove: React.PropTypes.func.isRequired
+    onRemove: React.PropTypes.func.isRequired,
+    onEdit: React.PropTypes.func.isRequired
 };
 
 export default TodoListItem;

@@ -59,18 +59,22 @@ class AddTodoListItemForm extends React.Component {
      */
     render() {
         return (
-            <form action="" method="get" className="form" onSubmit={ this._onSubmit.bind(this) }>
-                <div className="form-group">
-                    <label htmlFor="add-todo-list-item-form-title" />
-                    <input
-                        type="text"
-                        id="add-todo-list-item-form-title"
-                        ref={ TITLE_FIELD }
-                        value={ this.state.title }
-                        onChange={ this._onFieldChange.bind(this, TITLE_FIELD) }
-                    />
-                </div>
-            </form>
+            <div className="add-todo-list-item-form">
+                <form action="" method="get" className="form" onSubmit={ this._onSubmit.bind(this) }>
+                    <div className="form-group">
+                        <label htmlFor="add-todo-list-item-form-title" />
+                        <input
+                            type="text"
+                            id="add-todo-list-item-form-title"
+                            className="form-control"
+                            placeholder="Type the title of your todo and press enter"
+                            ref={ TITLE_FIELD }
+                            value={ this.state.title }
+                            onChange={ this._onFieldChange.bind(this, TITLE_FIELD) }
+                        />
+                    </div>
+                </form>
+            </div>
         );
     }
 }

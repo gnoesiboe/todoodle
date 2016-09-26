@@ -1,6 +1,5 @@
 import 'whatwg-fetch'; // Polyfill fetch
-
-var Routing = Routing || {};
+import * as queryString from 'query-string';
 
 /**
  * @param {Object} response
@@ -62,14 +61,26 @@ var _executeGet = function (url) {
 
 /**
  * @param {String} url
+ * @param {Object} body
  * 
  * @returns {Promise}
  *
  * @private
  */
-var _executePut = function (url) {
-    return _execute(url, {
-        method: 'put'
+var _executePut = function (url, body = {}) {
+
+    // use www-form-urlencoded as otherwise multipart is used, which does not work with PUT request
+    var theHeaders = new Headers();
+    theHeaders.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+
+    var bodyQueryString = Object.keys(body).length > 0
+        ? queryString.stringify(body)
+        : '';
+
+    return _execute(url + '?' + queryString, {
+        method: 'put',
+        body: bodyQueryString,
+        headers: theHeaders
     });
 };
 
@@ -181,6 +192,34 @@ export function createTodoListItem(todoListId, todoListToken, title, id) {
             };
 
             _executePost(url, body)
+                .then((json) => resolve(json))
+                .catch((error) => reject(error));
+        }
+    )
+}
+
+/**
+ * @param {Number} todoListId
+ * @param {String} todoListToken
+ * @param {Number} id
+ * @param {String} title
+ * 
+ * @returns {Promise}
+ */
+export function editTodoListItem(todoListId, todoListToken, id, title) {
+    return new Promise(
+        function (resolve, reject) {
+            var url = window.Routing.generate('api_todo_list_item_edit', {
+                todoListId: todoListId,
+                todoListToken: todoListToken,
+                id: id
+            });
+
+            var body = {
+                title: title
+            };
+
+            _executePut(url, body)
                 .then((json) => resolve(json))
                 .catch((error) => reject(error));
         }

@@ -41,6 +41,7 @@ class TodoList extends React.Component {
                                 checked={ todoListItem.checked }
                                 onCheckedChange={ this.props.onTodoCheckedChange }
                                 onRemove={ this.props.onTodoListItemRemove }
+                                onEdit={ this.props.onTodoListItemEdit }
                             />
                         );
                     }) }
@@ -54,7 +55,8 @@ TodoList.propTypes = {
     items: React.PropTypes.instanceOf(TodoListItemCollection).isRequired,
     onTodoCheckedChange: React.PropTypes.func.isRequired, //@todo rename to onTodoListItemCheckedChange
     onTodoListItemRemove: React.PropTypes.func.isRequired,
-    onTodoListItemCreate: React.PropTypes.func.isRequired
+    onTodoListItemCreate: React.PropTypes.func.isRequired,
+    onTodoListItemEdit: React.PropTypes.func.isRequired
 };
 
 export default TodoList;
