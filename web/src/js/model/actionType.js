@@ -22,3 +22,6 @@ export const EDIT_TODO_LIST_ITEM_IMPORT = 'edit_todo_list_item_import';
 export const EDIT_TODO_LIST_ITEM_STOP = 'edit_todo_list_item_stop';
 
 export const SET_CURRENT_TODO_LIST_ITEM = 'set_current_todo_list_item';
+
+export const START_EDIT_TODO_LIST_ITEM = 'start_edit_todo_list_item';
+export const CANCEL_EDIT_TODO_LIST_ITEM = 'cancel_edit_todo_list_item';

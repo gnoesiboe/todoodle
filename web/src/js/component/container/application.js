@@ -34,7 +34,22 @@ class Application extends React.Component {
     _bindKeyboardShortcuts() {
         this._keyboardBindingIds.push(
             keyboardListener.bind(['j', 'down'], this._onNextKeyboardBindingPressed.bind(this)),
-            keyboardListener.bind(['k', 'up'], this._onPreviousKeyboardBindingPressed.bind(this))
+            keyboardListener.bind(['k', 'up'], this._onPreviousKeyboardBindingPressed.bind(this)),
+            keyboardListener.bind('e', this._onEditCurrentKeyboardBindingPressed.bind(this))
+        );
+    }
+
+    /**
+     * @param {Event} event
+     * @private
+     */
+    _onEditCurrentKeyboardBindingPressed(event) {
+
+        // prevent typing in edit title field
+        event.preventDefault();
+
+        this.props.dispatch(
+            actionFactory.createEditCurrentTodoListItemAction()
         );
     }
 
@@ -43,7 +58,7 @@ class Application extends React.Component {
      */
     _onPreviousKeyboardBindingPressed() {
         this.props.dispatch(
-            actionFactory.createSelectPreviousTodoListItem()
+            actionFactory.createSelectPreviousTodoListItemAction()
         );
     }
 
@@ -52,7 +67,7 @@ class Application extends React.Component {
      */
     _onNextKeyboardBindingPressed() {
         this.props.dispatch(
-            actionFactory.createSelectNextTodoListItem()
+            actionFactory.createSelectNextTodoListItemAction()
         );
     }
 
@@ -145,6 +160,28 @@ class Application extends React.Component {
     }
 
     /**
+     * @param {String} id
+     *
+     * @private
+     */
+    _onTodoListItemEditStart(id) {
+        this.props.dispatch(
+            actionFactory.createStartEditTodoListItemAction(id)
+        );
+    }
+
+    /**
+     * @param {String} id
+     *
+     * @private
+     */
+    _onTodoListItemEditCancel(id) {
+        this.props.dispatch(
+            actionFactory.createCancelEditTodoListItemAction(id)
+        );
+    }
+
+    /**
      * @returns {XML}
      */
     render() {
@@ -156,11 +193,14 @@ class Application extends React.Component {
                 <div className={ currentTodoListItemId ? 'col-sm-6' : 'col-sm-12' }>
                     <TodoList
                         items={ todoListItems }
+                        editingTodoListItemId={ current.editingTodoListItemId }
                         onTodoCheckedChange={ this._onTodoCheckedChange.bind(this) }
                         onTodoListItemRemove={ this._onTodoListItemRemove.bind(this) }
                         onTodoListItemCreate={ this._onTodoListItemCreate.bind(this) }
                         onTodoListItemEdit={ this._onTodoListItemEdit.bind(this) }
                         onTodoListItemClick={ this._onTodoListItemClick.bind(this) }
+                        onTodoListItemEditStart={ this._onTodoListItemEditStart.bind(this) }
+                        onTodoListItemEditCancel={ this._onTodoListItemEditCancel.bind(this) }
                         currentTodoListItemId={ currentTodoListItemId }
                     />
                 </div>

@@ -128,6 +128,26 @@ class TodoListItemCollection {
     }
 
     /**
+     * @param {String} id
+     *
+     * @returns {TodoListItem|null}
+     */
+    getOneById(id) {
+        return this.firstMatching((todoListItem) => todoListItem.id === id);
+    }
+
+    /**
+     * @param {Function} callback
+     *
+     * @returns {TodoListItem|null}
+     */
+    firstMatching(callback) {
+        var result = this._items.filter(callback);
+
+        return result.length > 0 ? result[0] : null;
+    }
+
+    /**
      * @returns {TodoListItem|null}
      */
     last() {

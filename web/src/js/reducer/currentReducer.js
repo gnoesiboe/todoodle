@@ -54,6 +54,16 @@ export default function currentReducer(currentState = _defaultState, action) {
 
         case actionType.SET_CURRENT_TODO_LIST_ITEM:
             return currentState.setTodoListItemId(action.payload.id);
+
+        case actionType.START_EDIT_TODO_LIST_ITEM:
+            return currentState.setEditingTodoListItemId(action.payload.id);
+
+        case actionType.CANCEL_EDIT_TODO_LIST_ITEM:
+            return currentState.setEditingTodoListItemId(null);
+
+        case actionType.EDIT_TODO_LIST_ITEM_START:
+            // close edit form after saving item client side
+            return currentState.setEditingTodoListItemId(null);
     }
 
     return currentState;

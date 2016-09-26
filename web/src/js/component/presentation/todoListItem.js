@@ -1,26 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const MODE_VIEW = 'view';
-const MODE_EDIT = 'edit';
-
 import EditTodoListItemForm from './editTodoListItemForm';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
  */
 class TodoListItem extends React.Component {
-
-    /**
-     * @param {Object} props
-     */
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            mode: MODE_VIEW
-        };
-    }
 
     /**
      * @private
@@ -68,9 +54,7 @@ class TodoListItem extends React.Component {
             return;
         }
 
-        this.setState({
-            mode: MODE_EDIT
-        });
+        this.props.onEditStart(this.props.id);
     }
 
     /**
@@ -78,6 +62,28 @@ class TodoListItem extends React.Component {
      */
     _onClick() {
         this.props.onClick(this.props.id);
+    }
+
+    /**
+     * @param {String} title
+     *
+     * @private
+     */
+    _onEdit(title) {
+        this.props.onEdit(
+            this.props.id,
+            this.props.externalId,
+            title
+        );
+    }
+
+    /**
+     * @private
+     */
+    _onEditCancel() {
+        this.props.onEditCancel(
+            this.props.id
+        );
     }
 
     /**
@@ -118,32 +124,6 @@ class TodoListItem extends React.Component {
     }
 
     /**
-     * @param {String} title
-     *
-     * @private
-     */
-    _onEdit(title) {
-        this.props.onEdit(
-            this.props.id,
-            this.props.externalId,
-            title
-        );
-
-        this.setState({
-            mode: MODE_VIEW
-        });
-    }
-
-    /**
-     * @private
-     */
-    _onEditCancel() {
-        this.setState({
-            mode:MODE_VIEW
-        });
-    }
-
-    /**
      * @returns {XML}
      *
      * @private
@@ -180,15 +160,10 @@ class TodoListItem extends React.Component {
      * @returns {XML}
      */
     render() {
-        switch (this.state.mode) {
-            case MODE_VIEW:
-                return this._renderViewMode();
-
-            case MODE_EDIT:
-                return this._renderEditMode();
-
-            default:
-                throw new Error(`Mode: '${this.state.mode}' not supported`);
+        if (this.props.isBeingEdited) {
+            return this._renderEditMode();
+        } else {
+            return this._renderViewMode();
         }
     }
 }
@@ -196,7 +171,8 @@ class TodoListItem extends React.Component {
 TodoListItem.defaultProps = {
     isChecked: false,
     externalId: null,
-    isCurrent: false
+    isCurrent: false,
+    isBeingEdited: false
 };
 
 TodoListItem.propTypes = {
@@ -207,8 +183,11 @@ TodoListItem.propTypes = {
     onCheckedChange: React.PropTypes.func.isRequired,
     onRemove: React.PropTypes.func.isRequired,
     onEdit: React.PropTypes.func.isRequired,
+    onEditStart: React.PropTypes.func.isRequired,
+    onEditCancel: React.PropTypes.func.isRequired,
     onClick: React.PropTypes.func.isRequired,
-    isCurrent: React.PropTypes.bool.isRequired
+    isCurrent: React.PropTypes.bool.isRequired,
+    isBeingEdited: React.PropTypes.bool.isRequired,
 };
 
 export default TodoListItem;

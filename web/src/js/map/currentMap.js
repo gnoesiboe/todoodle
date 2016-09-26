@@ -6,10 +6,12 @@ class CurrentMap {
     /**
      * @param {TodoList} todoList
      * @param {String} todoLIstItemId
+     * @param {String|null} editingTodoListItemId
      */
-    constructor(todoList = null, todoLIstItemId = null) {
+    constructor(todoList = null, todoLIstItemId = null, editingTodoListItemId = null) {
         this._todoList = todoList;
         this._todoListItemId = todoLIstItemId;
+        this._editingTodoListItemId = editingTodoListItemId;
     }
 
     /**
@@ -25,7 +27,8 @@ class CurrentMap {
     setTodoList(todoList) {
         return new CurrentMap(
             todoList,
-            this._todoListItemId
+            this._todoListItemId,
+            this._editingTodoListItemId
         );
     }
 
@@ -42,6 +45,27 @@ class CurrentMap {
     setTodoListItemId(id) {
         return new CurrentMap(
             this._todoList ? this._todoList.clone() : null,
+            id,
+            this._editingTodoListItemId
+        );
+    }
+
+    /**
+     * @returns {String|null}
+     */
+    get editingTodoListItemId() {
+        return this._editingTodoListItemId;
+    }
+
+    /**
+     * @param {String|null} id
+     *
+     * @returns {CurrentMap}
+     */
+    setEditingTodoListItemId(id) {
+        return new CurrentMap(
+            this._todoList,
+            this._todoListItemId,
             id
         );
     }

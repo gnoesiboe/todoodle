@@ -416,7 +416,7 @@ export function createSetCurrentTodoListItemAction(id) {
 /**
  * @returns {Function}
  */
-export function createSelectPreviousTodoListItem() {
+export function createSelectPreviousTodoListItemAction() {
     return function (dispatch, getState) {
         var state = getState(),
             current = state[stateNamespace.CURRENT],
@@ -438,8 +438,6 @@ export function createSelectPreviousTodoListItem() {
             var currentIndex = todoListItems.getIndexById(currentTodoListItemId),
                 previousIndex = currentIndex > 0 ? currentIndex - 1 : todoListItems.count() - 1;
 
-            console.log(currentIndex, previousIndex);
-
             dispatch(
                 createSetCurrentTodoListItemAction(
                     todoListItems.getOneWithIndex(previousIndex).id
@@ -452,7 +450,7 @@ export function createSelectPreviousTodoListItem() {
 /**
  * @returns {Function}
  */
-export function createSelectNextTodoListItem() {
+export function createSelectNextTodoListItemAction() {
     return function (dispatch, getState) {
         var state = getState(),
             current = state[stateNamespace.CURRENT],
@@ -481,4 +479,48 @@ export function createSelectNextTodoListItem() {
             )
         }
     }
+}
+
+/**
+ * @param {String} id
+ *
+ * @returns {Object}
+ */
+export function createStartEditTodoListItemAction(id) {
+    return _createAction(actionType.START_EDIT_TODO_LIST_ITEM, {
+        id: id
+    });
+}
+
+/**
+ * @param {String} id
+ *
+ * @returns {Object}
+ */
+export function createCancelEditTodoListItemAction(id) {
+    return _createAction(actionType.CANCEL_EDIT_TODO_LIST_ITEM, {
+        id: id
+    });
+}
+
+export function createEditCurrentTodoListItemAction() {
+    return function (dispatch, getState) {
+        var state = getState(),
+            current = state[stateNamespace.CURRENT],
+            todoListItems = state[stateNamespace.TODO_LIST_ITEMS];
+
+        if (current.todoListItemId === null) {
+            return;
+        }
+
+        var todoListItem = todoListItems.getOneById(
+            current.todoListItemId
+        );
+
+        if (!todoListItem) {
+            return;
+        }
+
+        dispatch(createStartEditTodoListItemAction(todoListItem.id));
+    };
 }
