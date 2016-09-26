@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const TITLE_FIELD = 'title';
 
@@ -14,6 +15,20 @@ class AddTodoListItemForm extends React.Component {
         super(props);
 
         this.state = this._getResetState();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    componentDidMount() {
+        this._focusTitleInput();
+    }
+
+    /**
+     * @private
+     */
+    _focusTitleInput() {
+        ReactDOM.findDOMNode(this.refs[TITLE_FIELD]).focus();
     }
 
     /**
