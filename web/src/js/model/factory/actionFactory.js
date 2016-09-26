@@ -1,6 +1,7 @@
 import uuid from 'uuid';
 import * as actionType from './../actionType';
 import * as apiClient from './../../client/apiClient';
+import * as stateNamespace from './../../model/stateNamespace';
 
 /**
  * @param {String} type
@@ -410,4 +411,38 @@ export function createSetCurrentTodoListItemAction(id) {
     return _createAction(actionType.SET_CURRENT_TODO_LIST_ITEM, {
         id: id
     })
+}
+
+/**
+ * @returns {Object}
+ */
+export function createSelectNextTodoListItem() {
+    return function (dispatch, getState) {
+        var state = getState(),
+            current = state[stateNamespace.CURRENT],
+            todoListItems = state[stateNamespace.TODO_LIST_ITEMS];
+
+        if (todoListItems.count() === 0) {
+            return;
+        }
+
+        var currentTodoListItemId = current.todoListItemId;
+
+        if (currentTodoListItemId === null) {
+            dispatch(
+                createSetCurrentTodoListItemAction(
+                    todoListItems.first().id
+                )
+            )
+        } else {
+            var currentIndex = todoListItems.getIndexById(currentTodoListItemId),
+                nextIndex = todoListItems.hasIndex(currentIndex + 1) ? currentIndex + 1 : 0;
+
+            dispatch(
+                createSetCurrentTodoListItemAction(
+                    todoListItems.getOneWithIndex(nextIndex).id
+                )
+            )
+        }
+    }
 }

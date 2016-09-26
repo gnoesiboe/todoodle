@@ -4,6 +4,7 @@ import * as stateNamespace from './../../model/stateNamespace';
 import { createImportTodoListAction } from './../../model/factory/actionFactory';
 import TodoList from './../presentation/todoList';
 import * as actionFactory from './../../model/factory/actionFactory';
+import * as keyboardListener from './../../listener/keyboardListener';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
@@ -11,9 +12,51 @@ import * as actionFactory from './../../model/factory/actionFactory';
 class Application extends React.Component {
 
     /**
+     * @param {Object} props
+     */
+    constructor(props) {
+        super(props);
+
+        this._keyboardBindingIds = [];
+    }
+
+    /**
      * @inheritDoc
      */
     componentDidMount() {
+        this._requestTodoList();
+        this._bindKeyboardShortcuts();
+    }
+
+    /**
+     * @private
+     */
+    _bindKeyboardShortcuts() {
+        this._keyboardBindingIds.push(
+            keyboardListener.bind(['j', 'down'], this._onNextKeyboardBindingPressed.bind(this))
+        );
+    }
+
+    /**
+     * @private
+     */
+    _onNextKeyboardBindingPressed() {
+        this.props.dispatch(
+            actionFactory.createSelectNextTodoListItem()
+        )
+    }
+
+    /**
+     * @inheritDoc
+     */
+    componentWillUnmount() {
+        keyboardListener.unbindBatch(this._keyboardBindingIds);
+    }
+
+    /**
+     * @private
+     */
+    _requestTodoList() {
         this.props.dispatch(
             createImportTodoListAction(this.props.todoListExternalId, this.props.todoListToken)
         );

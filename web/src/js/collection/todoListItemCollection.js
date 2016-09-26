@@ -75,7 +75,7 @@ class TodoListItemCollection {
      * @returns {boolean}
      */
     hasIndex(index) {
-        return this._items[index] !== 'undefined';
+        return typeof this._items[index] !== 'undefined';
     }
 
     /**
@@ -111,6 +111,20 @@ class TodoListItemCollection {
         return new TodoListItemCollection(
             this._items.map((todoListItem) => todoListItem.clone())
         );
+    }
+
+    /**
+     * @returns {Number}
+     */
+    count() {
+        return this._items.length;
+    }
+
+    /**
+     * @returns {TodoListItem|null}
+     */
+    first() {
+        return this.count() > 0 ? this._items[0] : null;
     }
 
     /**
