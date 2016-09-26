@@ -108,10 +108,10 @@ var _handleImportOfUpdatedTodoListItemAction = function (currentState, action) {
 
     var incomingTodoListItem = createFromApiInput(result.todoListItem);
 
-    var index = currentState.getIndexByExternalId(todoListItem.externalId);
+    var index = currentState.getIndexByExternalId(incomingTodoListItem.externalId);
 
     if (index === -1) {
-        throw new Error(`Handling action '${action.type}' for non existent todo list item with external id: ${todoListItem.externalId}`);
+        throw new Error(`Handling action '${action.type}' for non existent todo list item with external id: ${incomingTodoListItem.externalId}`);
     }
 
     var newTodoListItem = currentState.getOneWithIndex(index).clone();
