@@ -35,7 +35,17 @@ class Application extends React.Component {
         this._keyboardBindingIds.push(
             keyboardListener.bind(['j', 'down'], this._onNextKeyboardBindingPressed.bind(this)),
             keyboardListener.bind(['k', 'up'], this._onPreviousKeyboardBindingPressed.bind(this)),
-            keyboardListener.bind('e', this._onEditCurrentKeyboardBindingPressed.bind(this))
+            keyboardListener.bind('e', this._onEditCurrentKeyboardBindingPressed.bind(this)),
+            keyboardListener.bind('space', this._onToggleCheckedKeyboardBindingPressed.bind(this))
+        );
+    }
+
+    /**
+     * @private
+     */
+    _onToggleCheckedKeyboardBindingPressed() {
+        this.props.dispatch(
+            actionFactory.createToggleCheckedForCurrentTodoListItemAction()
         );
     }
 
