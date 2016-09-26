@@ -128,6 +128,13 @@ class TodoListItemCollection {
     }
 
     /**
+     * @returns {TodoListItem|null}
+     */
+    last() {
+        return this.count() > 0 ? this._items[this.count() - 1] : null;
+    }
+
+    /**
      * @returns {Array}
      */
     all() {

@@ -414,7 +414,43 @@ export function createSetCurrentTodoListItemAction(id) {
 }
 
 /**
- * @returns {Object}
+ * @returns {Function}
+ */
+export function createSelectPreviousTodoListItem() {
+    return function (dispatch, getState) {
+        var state = getState(),
+            current = state[stateNamespace.CURRENT],
+            todoListItems = state[stateNamespace.TODO_LIST_ITEMS];
+
+        if (todoListItems.count() === 0) {
+            return;
+        }
+
+        var currentTodoListItemId = current.todoListItemId;
+
+        if (currentTodoListItemId === null) {
+            dispatch(
+                createSetCurrentTodoListItemAction(
+                    todoListItems.last().id
+                )
+            );
+        } else {
+            var currentIndex = todoListItems.getIndexById(currentTodoListItemId),
+                previousIndex = currentIndex > 0 ? currentIndex - 1 : todoListItems.count() - 1;
+
+            console.log(currentIndex, previousIndex);
+
+            dispatch(
+                createSetCurrentTodoListItemAction(
+                    todoListItems.getOneWithIndex(previousIndex).id
+                )
+            )
+        }
+    }
+}
+
+/**
+ * @returns {Function}
  */
 export function createSelectNextTodoListItem() {
     return function (dispatch, getState) {

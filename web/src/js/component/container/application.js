@@ -33,7 +33,17 @@ class Application extends React.Component {
      */
     _bindKeyboardShortcuts() {
         this._keyboardBindingIds.push(
-            keyboardListener.bind(['j', 'down'], this._onNextKeyboardBindingPressed.bind(this))
+            keyboardListener.bind(['j', 'down'], this._onNextKeyboardBindingPressed.bind(this)),
+            keyboardListener.bind(['k', 'up'], this._onPreviousKeyboardBindingPressed.bind(this))
+        );
+    }
+
+    /**
+     * @private
+     */
+    _onPreviousKeyboardBindingPressed() {
+        this.props.dispatch(
+            actionFactory.createSelectPreviousTodoListItem()
         );
     }
 
@@ -43,7 +53,7 @@ class Application extends React.Component {
     _onNextKeyboardBindingPressed() {
         this.props.dispatch(
             actionFactory.createSelectNextTodoListItem()
-        )
+        );
     }
 
     /**
