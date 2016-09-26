@@ -77,7 +77,7 @@ var _executePut = function (url, body = {}) {
         ? queryString.stringify(body)
         : '';
 
-    return _execute(url + '?' + queryString, {
+    return _execute(url, {
         method: 'put',
         body: bodyQueryString,
         headers: theHeaders
