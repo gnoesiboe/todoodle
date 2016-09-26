@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 const TITLE_FIELD = 'title';
 
@@ -15,20 +14,6 @@ class AddTodoListItemForm extends React.Component {
         super(props);
 
         this.state = this._getResetState();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    componentDidMount() {
-        this._focusTitleInput();
-    }
-
-    /**
-     * @private
-     */
-    _focusTitleInput() {
-        ReactDOM.findDOMNode(this.refs[TITLE_FIELD]).focus();
     }
 
     /**
@@ -83,7 +68,6 @@ class AddTodoListItemForm extends React.Component {
                             id="add-todo-list-item-form-title"
                             className="form-control"
                             placeholder="Type the title of your todo and press enter"
-                            ref={ TITLE_FIELD }
                             value={ this.state.title }
                             onChange={ this._onFieldChange.bind(this, TITLE_FIELD) }
                         />
