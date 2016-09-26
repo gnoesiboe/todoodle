@@ -57,21 +57,17 @@ final class TodoListItemCreateController extends Controller
 
         $todoListItem = new TodoListItem($todoList);
 
-        $form = $this->formFactory->createNamed(null, TodoListItemType::class, $todoListItem, [
-            'csrf_protection' => false
-        ]);
+        $form = $this->formFactory->createNamed(null, TodoListItemType::class, $todoListItem);
 
-        if ($request->isMethod('post')) {
-            $form->submit($request->request->all());
+        $form->submit($request->request->all());
 
-            if (!$form->isValid()) {
-                throw new BadRequestHttpException($form->getErrors(true)->__toString());
-            }
-
-            $todoList->addItem($todoListItem);
-
-            $this->todoListRepository->update($todoList);
+        if (!$form->isValid()) {
+            throw new BadRequestHttpException($form->getErrors(true)->__toString());
         }
+
+        $todoList->addItem($todoListItem);
+
+        $this->todoListRepository->update($todoList);
 
         return $this->responseFactory->createDetailResponse($todoListItem, $externalReference);
     }
