@@ -106,7 +106,7 @@ var _handleImportOfUpdatedTodoListItemAction = function (currentState, action) {
 
     validatePropertyPathExists(result, 'todoListItem', unexpectedResponseMessage);
 
-    var todoListItem = createFromApiInput(result.todoListItem);
+    var incomingTodoListItem = createFromApiInput(result.todoListItem);
 
     var index = currentState.getIndexByExternalId(todoListItem.externalId);
 
@@ -114,7 +114,11 @@ var _handleImportOfUpdatedTodoListItemAction = function (currentState, action) {
         throw new Error(`Handling action '${action.type}' for non existent todo list item with external id: ${todoListItem.externalId}`);
     }
 
-    return currentState.insertAtIndex(index, todoListItem);
+    var newTodoListItem = currentState.getOneWithIndex(index).clone();
+
+    newTodoListItem.title = incomingTodoListItem.title;
+
+    return currentState.insertAtIndex(index, newTodoListItem);
 };
 
 /**
