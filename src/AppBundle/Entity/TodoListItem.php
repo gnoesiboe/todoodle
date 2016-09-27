@@ -25,6 +25,11 @@ class TodoListItem
     private $title;
 
     /**
+     * @var string
+     */
+    private $description;
+
+    /**
      * @var bool
      */
     private $checked = false;
@@ -113,5 +118,25 @@ class TodoListItem
     public function isId($id)
     {
         return (int) $this->id === (int) $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

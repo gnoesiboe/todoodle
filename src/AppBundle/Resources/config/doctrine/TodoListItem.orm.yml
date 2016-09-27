@@ -8,6 +8,10 @@ AppBundle\Entity\TodoListItem:
     fields:
         title:
             type: string
+        description:
+            type: text
+            length: 10000
+            nullable: true
         checked:
             type: boolean
     manyToOne:
