@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const TITLE_FIELD = 'title';
+const DESCRIPTION_FIELD = 'description';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
@@ -15,7 +16,8 @@ class EditTodoListItemForm extends React.Component {
         super(props);
 
         this.state = {
-            [TITLE_FIELD]: this.props.title
+            [TITLE_FIELD]: this.props.title,
+            [DESCRIPTION_FIELD]: this.props.description
         };
     }
 
@@ -77,38 +79,59 @@ class EditTodoListItemForm extends React.Component {
      */
     render() {
         return (
-            <form className="form-horizontal" onSubmit={ this._onSubmit.bind(this) }>
+            <form className="form" onSubmit={ this._onSubmit.bind(this) }>
                 <div className="form-group">
-                    <label className="col-sm-2 control-label">Title</label>
-                    <div className="col-sm-10">
-                        <input
-                            type="text"
-                            value={ this.state[TITLE_FIELD] }
-                            ref={ TITLE_FIELD }
-                            onChange={ this._onFieldChange.bind(this, TITLE_FIELD) }
-                            className="form-control"
-                        />
-                    </div>
+                    <label
+                        className="control-label"
+                        htmlFor={ TITLE_FIELD + '_field_id' }
+                    >
+                        Title
+                    </label>
+                    <input
+                        type="text"
+                        value={ this.state[TITLE_FIELD] }
+                        ref={ TITLE_FIELD }
+                        id={ TITLE_FIELD + '_field_id' }
+                        onChange={ this._onFieldChange.bind(this, TITLE_FIELD) }
+                        className="form-control"
+                    />
                 </div>
                 <div className="form-group">
-                    <div className="col-sm-offset-2 col-sm-10">
-                        <ul className="list-inline">
-                            <li>
-                                <button type="submit" className="btn btn-success">Save</button>
-                            </li>
-                            <li>
-                                <a href="#" onClick={ this._onCancel.bind(this)} className="btn btn-link">Cancel</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <label
+                        className="control-label"
+                        htmlFor={ DESCRIPTION_FIELD + '_field_id' }
+                    >
+                        Description
+                    </label>
+                    <textarea
+                        value={ this.props.description }
+                        id={ DESCRIPTION_FIELD + '_field_id' }
+                        onChange={ this._onFieldChange.bind(this, DESCRIPTION_FIELD) }
+                        className="form-control"
+                    />
+                </div>
+                <div className="form-group">
+                    <ul className="list-inline">
+                        <li>
+                            <button type="submit" className="btn btn-success">Save</button>
+                        </li>
+                        <li>
+                            <a href="#" onClick={ this._onCancel.bind(this)} className="btn btn-link">Cancel</a>
+                        </li>
+                    </ul>
                 </div>
             </form>
         );
     }
 }
 
+EditTodoListItemForm.defaultProps = {
+    description: ''
+};
+
 EditTodoListItemForm.propTypes = {
     title: React.PropTypes.string.isRequired,
+    description: React.PropTypes.string,
     onEdit: React.PropTypes.func.isRequired,
     onCancel: React.PropTypes.func.isRequired
 };

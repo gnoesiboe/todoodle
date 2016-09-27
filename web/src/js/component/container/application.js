@@ -229,6 +229,7 @@ class Application extends React.Component {
         return (
             <EditTodoListItemForm
                 title={ todoListItem.title }
+                description={ todoListItem.description }
                 onEdit={ this._onTodoListItemEdit.bind(this) }
                 onCancel={ this._onTodoListItemEditCancel.bind(this) }
             />
