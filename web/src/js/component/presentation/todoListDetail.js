@@ -1,4 +1,7 @@
 import React from 'react';
+import showdown from 'showdown';
+
+var _showdownConverter = new showdown.Converter();
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
@@ -14,7 +17,7 @@ class TodoListDetail extends React.Component {
         return (
             <div className="todo-list-detail">
                 <h1 className="todo-list-detail-title">{ title }</h1>
-                { description }
+                <div dangerouslySetInnerHTML={{ __html: _showdownConverter.makeHtml(description) }} />
             </div>
         );
     }
