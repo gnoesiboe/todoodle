@@ -215,6 +215,7 @@ class Application extends React.Component {
             <div className="col-sm-6">
                 <TodoListDetail
                     title={ currentTodoListItem.title }
+                    description={ currentTodoListItem.description }
                 />
             </div>
         );

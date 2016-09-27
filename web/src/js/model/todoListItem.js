@@ -8,12 +8,14 @@ class TodoListItem {
      * @param {String} title
      * @param {Number=} externalId
      * @param {Boolean=} checked
+     * @param {String=} description
      */
-    constructor(id, title, externalId = null, checked = false) {
+    constructor(id, title, externalId = null, checked = false, description = null) {
         this._id = id;
         this._title = title;
         this._externalId = externalId;
         this._checked = checked;
+        this._description = description;
     }
 
     /**
@@ -66,6 +68,20 @@ class TodoListItem {
     }
 
     /**
+     * @returns {String|null}
+     */
+    get description() {
+        return this._description;
+    }
+
+    /**
+     * @param {String|null} description
+     */
+    set description(description) {
+        this._description = description;
+    }
+
+    /**
      * @returns {TodoListItem}
      */
     clone() {
@@ -73,7 +89,8 @@ class TodoListItem {
             this._id,
             this._title,
             this._externalId,
-            this._checked
+            this._checked,
+            this._description
         );
     }
 }

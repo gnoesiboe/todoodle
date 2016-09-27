@@ -8,15 +8,17 @@ import TodoListItem from './../todoListItem';
  * @param {String} title
  * @param {Number=} externalId
  * @param {Boolean=} checked
+ * @param {String=} description
  *
  * @returns {TodoListItem}
  */
-export function createModel(id, title, externalId = null, checked = false) {
+export function createModel(id, title, externalId = null, checked = false, description = null) {
     return new TodoListItem(
         id,
         title,
         externalId,
-        checked
+        checked,
+        description
     );
 }
 
@@ -31,12 +33,14 @@ export function createFromApiInput(apiInput) {
     validatePropertyPathExists(apiInput, 'id', unexpectedResponseMessage);
     validatePropertyPathExists(apiInput, 'title', unexpectedResponseMessage);
     validatePropertyPathExists(apiInput, 'checked', unexpectedResponseMessage);
+    validatePropertyPathExists(apiInput, 'description', unexpectedResponseMessage);
 
     return createModel(
         uuid(),
         apiInput.title,
         apiInput.id,
-        apiInput.checked
+        apiInput.checked,
+        apiInput.description
     );
 }
 
