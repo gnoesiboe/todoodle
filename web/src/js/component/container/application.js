@@ -3,6 +3,7 @@ import * as reactRedux from 'react-redux';
 import * as stateNamespace from './../../model/stateNamespace';
 import { createImportTodoListAction } from './../../model/factory/actionFactory';
 import TodoList from './../presentation/todoList';
+import TodoListDetail from './../presentation/todoListDetail';
 import * as actionFactory from './../../model/factory/actionFactory';
 import * as keyboardListener from './../../listener/keyboardListener';
 
@@ -192,6 +193,30 @@ class Application extends React.Component {
     }
 
     /**
+     * @returns {XML|null}
+     *
+     * @private
+     */
+    _renderDetailView() {
+        var { current, todoListItems } = this.props,
+            currentTodoListItemId = current.todoListItemId;
+
+        if (currentTodoListItemId === null) {
+            return null;
+        }
+
+        var currentTodoListItem = todoListItems.getOneById(currentTodoListItemId);
+
+        return (
+            <div className="col-sm-6">
+                <TodoListDetail
+                    title={ currentTodoListItem.title }
+                />
+            </div>
+        );
+    }
+
+    /**
      * @returns {XML}
      */
     render() {
@@ -214,6 +239,7 @@ class Application extends React.Component {
                         currentTodoListItemId={ currentTodoListItemId }
                     />
                 </div>
+                { this._renderDetailView() }
             </div>
         );
     }

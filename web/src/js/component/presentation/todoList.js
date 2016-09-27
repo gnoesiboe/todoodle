@@ -24,11 +24,6 @@ class TodoList extends React.Component {
                         </td>
                         <td />
                     </tr>
-                    <tr>
-                        <th className="todo-list-thead-checked">#</th>
-                        <th>Task</th>
-                        <th className="todo-list-thead-actions" />
-                    </tr>
                 </thead>
                 <tbody>
                     { this.props.items.all().map((todoListItem) => {

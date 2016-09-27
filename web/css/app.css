@@ -20,3 +20,11 @@
     .todo-list-item--current {
         background-color: #fff9ca;
     }
+
+.todo-list-detail {
+    margin-top: 95px;
+}
+
+    .todo-list-detail-title {
+        font-size: 20px;
+    }
