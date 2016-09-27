@@ -207,6 +207,10 @@ class Application extends React.Component {
 
         var currentTodoListItem = todoListItems.getOneById(currentTodoListItemId);
 
+        if (!currentTodoListItem) {
+            return null;
+        }
+
         return (
             <div className="col-sm-6">
                 <TodoListDetail
