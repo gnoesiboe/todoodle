@@ -20,6 +20,7 @@ final class TodoListItemResponseFactory
         return [
             'id' => (int) $todoListItem->getId(),
             'title' => $todoListItem->getTitle(),
+            'description' => $todoListItem->getDescription(),
             'checked' => $todoListItem->isChecked()
         ];
     }
