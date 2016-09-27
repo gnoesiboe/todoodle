@@ -1,8 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import EditTodoListItemForm from './editTodoListItemForm';
-
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
  */
@@ -65,33 +63,21 @@ class TodoListItem extends React.Component {
     }
 
     /**
-     * @param {String} title
+     * @returns {String}
      *
      * @private
      */
-    _onEdit(title) {
-        this.props.onEdit(
-            this.props.id,
-            this.props.externalId,
-            title
-        );
-    }
-
-    /**
-     * @private
-     */
-    _onEditCancel() {
-        this.props.onEditCancel(
-            this.props.id
-        );
+    _defineContainerClassName() {
+        return classNames({
+            'todo-list-item': true,
+            'todo-list-item--current': this.props.isCurrent
+        });
     }
 
     /**
      * @returns {XML}
-     *
-     * @private
      */
-    _renderViewMode() {
+    render() {
         var { id, checked, title } = this.props,
             checkboxId = `todo_list_item_${id}_checkbox`;
 
@@ -122,57 +108,12 @@ class TodoListItem extends React.Component {
             </tr>
         );
     }
-
-    /**
-     * @returns {XML}
-     *
-     * @private
-     */
-    _renderEditMode() {
-        return (
-            <tr className={ this._defineContainerClassName() }>
-                <td />
-                <td>
-                    <EditTodoListItemForm
-                        title={ this.props.title }
-                        onEdit={ this._onEdit.bind(this) }
-                        onCancel={ this._onEditCancel.bind(this) }
-                    />
-                </td>
-                <td />
-            </tr>
-        )
-    }
-
-    /**
-     * @returns {String}
-     *
-     * @private
-     */
-    _defineContainerClassName() {
-        return classNames({
-            'todo-list-item': true,
-            'todo-list-item--current': this.props.isCurrent
-        });
-    }
-
-    /**
-     * @returns {XML}
-     */
-    render() {
-        if (this.props.isBeingEdited) {
-            return this._renderEditMode();
-        } else {
-            return this._renderViewMode();
-        }
-    }
 }
 
 TodoListItem.defaultProps = {
     isChecked: false,
     externalId: null,
-    isCurrent: false,
-    isBeingEdited: false
+    isCurrent: false
 };
 
 TodoListItem.propTypes = {
@@ -182,12 +123,10 @@ TodoListItem.propTypes = {
     checked: React.PropTypes.bool.isRequired,
     onCheckedChange: React.PropTypes.func.isRequired,
     onRemove: React.PropTypes.func.isRequired,
-    onEdit: React.PropTypes.func.isRequired,
     onEditStart: React.PropTypes.func.isRequired,
     onEditCancel: React.PropTypes.func.isRequired,
     onClick: React.PropTypes.func.isRequired,
-    isCurrent: React.PropTypes.bool.isRequired,
-    isBeingEdited: React.PropTypes.bool.isRequired,
+    isCurrent: React.PropTypes.bool.isRequired
 };
 
 export default TodoListItem;

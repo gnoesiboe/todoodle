@@ -6,6 +6,7 @@ import TodoList from './../presentation/todoList';
 import TodoListDetail from './../presentation/todoListDetail';
 import * as actionFactory from './../../model/factory/actionFactory';
 import * as keyboardListener from './../../listener/keyboardListener';
+import EditTodoListItemForm from './../presentation/editTodoListItemForm';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
@@ -145,17 +146,26 @@ class Application extends React.Component {
     }
 
     /**
-     * @param {String} id
-     * @param {Number} externalId
      * @param {String} title
      *
      * @private
      */
-    _onTodoListItemEdit(id, externalId, title) {
-        var todoList = this.props.current.todoList;
+    _onTodoListItemEdit(title) {
+        var todoList = this.props.current.todoList,
+            todoListItemId = this.props.current.todoListItemId;
+
+        if (todoListItemId === null) {
+            return null;
+        }
+
+        var todoListItem = this.props.todoListItems.getOneById(todoListItemId);
+
+        if (!todoListItem) {
+            return null;
+        }
 
         this.props.dispatch(
-            actionFactory.createEditTodoListItemAction(todoList.externalId, todoList.token, id, externalId, title)
+            actionFactory.createEditTodoListItemAction(todoList.externalId, todoList.token, todoListItem.id, todoListItem.externalId, title)
         );
     }
 
@@ -193,6 +203,39 @@ class Application extends React.Component {
     }
 
     /**
+     * @param {TodoListItem} todoListItem
+     *
+     * @returns {XML}
+     *
+     * @private
+     */
+    static _renderTodoListDetail(todoListItem) {
+        return (
+            <TodoListDetail
+                title={ todoListItem.title }
+                description={ todoListItem.description }
+            />
+        );
+    }
+
+    /**
+     * @param {TodoListItem} todoListItem
+     *
+     * @returns {XML}
+     *
+     * @private
+     */
+    _renderEditTodoListItemForm(todoListItem) {
+        return (
+            <EditTodoListItemForm
+                title={ todoListItem.title }
+                onEdit={ this._onTodoListItemEdit.bind(this) }
+                onCancel={ this._onTodoListItemEditCancel.bind(this) }
+            />
+        );
+    }
+
+    /**
      * @returns {XML|null}
      *
      * @private
@@ -211,12 +254,18 @@ class Application extends React.Component {
             return null;
         }
 
+        var isBeingEdited = current.editingTodoListItemId === currentTodoListItemId;
+
+        if (isBeingEdited) {
+
+        }
+
         return (
             <div className="col-sm-6">
-                <TodoListDetail
-                    title={ currentTodoListItem.title }
-                    description={ currentTodoListItem.description }
-                />
+                { isBeingEdited
+                    ? this._renderEditTodoListItemForm(currentTodoListItem)
+                    : Application._renderTodoListDetail(currentTodoListItem)
+                }
             </div>
         );
     }

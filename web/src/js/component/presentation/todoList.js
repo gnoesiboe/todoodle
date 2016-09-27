@@ -36,12 +36,10 @@ class TodoList extends React.Component {
                                 checked={ todoListItem.checked }
                                 onCheckedChange={ this.props.onTodoCheckedChange }
                                 onRemove={ this.props.onTodoListItemRemove }
-                                onEdit={ this.props.onTodoListItemEdit }
                                 onEditStart={ this.props.onTodoListItemEditStart }
                                 onEditCancel={ this.props.onTodoListItemEditCancel }
                                 onClick={ this.props.onTodoListItemClick }
                                 isCurrent={ todoListItem.id === this.props.currentTodoListItemId }
-                                isBeingEdited={ todoListItem.id === this.props.editingTodoListItemId }
                             />
                         );
                     }) }
