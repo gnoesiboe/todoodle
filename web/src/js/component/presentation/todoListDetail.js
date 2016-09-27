@@ -1,7 +1,13 @@
 import React from 'react';
 import showdown from 'showdown';
 
-var _showdownConverter = new showdown.Converter();
+var _showdownConverter = new showdown.Converter({
+    headerLevelStart: 3,
+    simplifiedAutoLink: true,
+    strikethrough: true,
+    tables: true,
+    tasklists: true
+});
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
