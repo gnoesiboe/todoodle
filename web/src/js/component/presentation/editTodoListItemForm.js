@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const TITLE_FIELD = 'title';
-const DESCRIPTION_FIELD = 'description';
-
 import brace from 'brace';
 import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/tomorrow';
+import * as keyboardListener from './../../listener/keyboardListener';
+
+const TITLE_FIELD = 'title';
+const DESCRIPTION_FIELD = 'description';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
@@ -24,6 +24,8 @@ class EditTodoListItemForm extends React.Component {
             [TITLE_FIELD]: this.props.title,
             [DESCRIPTION_FIELD]: this.props.description ? this.props.description : ''
         };
+
+        this._keyboardBindingIds = [];
     }
 
     /**
@@ -31,6 +33,30 @@ class EditTodoListItemForm extends React.Component {
      */
     componentDidMount() {
         this._focusTitleInput();
+        this._bindKeyboardShortcuts();
+    }
+
+    /**
+     * @private
+     */
+    _bindKeyboardShortcuts() {
+        this._keyboardBindingIds.push(
+            keyboardListener.bind(['command+enter', 'ctrl+enter'], this._onSubmitKeyboardBindingPressed.bind(this), true)
+        );
+    }
+
+    /**
+     * @private
+     */
+    _onSubmitKeyboardBindingPressed() {
+        this._submit();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    componentWillUnmount() {
+        keyboardListener.unbindBatch(this._keyboardBindingIds);
     }
 
     /**
@@ -50,7 +76,17 @@ class EditTodoListItemForm extends React.Component {
         // prevent submit to backend
         event.preventDefault();
 
-        this.props.onEdit(this.state[TITLE_FIELD], this.state[DESCRIPTION_FIELD]);
+        this._submit();
+    }
+
+    /**
+     * @private
+     */
+    _submit() {
+        this.props.onEdit(
+            this.state[TITLE_FIELD],
+            this.state[DESCRIPTION_FIELD]
+        );
     }
 
     /**
