@@ -28,3 +28,8 @@
     .todo-list-detail-title {
         font-size: 20px;
     }
+
+    .edit-todo-list-item-form-description {
+        border: 1px solid #ccc;
+        padding: 6px 6px;
+    }

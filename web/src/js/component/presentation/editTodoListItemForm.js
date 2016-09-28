@@ -4,6 +4,11 @@ import ReactDOM from 'react-dom';
 const TITLE_FIELD = 'title';
 const DESCRIPTION_FIELD = 'description';
 
+import brace from 'brace';
+import AceEditor from 'react-ace';
+import 'brace/mode/markdown';
+import 'brace/theme/tomorrow';
+
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>
  */
@@ -103,12 +108,19 @@ class EditTodoListItemForm extends React.Component {
                     >
                         Description
                     </label>
-                    <textarea
-                        value={ this.props.description }
-                        id={ DESCRIPTION_FIELD + '_field_id' }
-                        onChange={ this._onFieldChange.bind(this, DESCRIPTION_FIELD) }
-                        className="form-control"
-                    />
+                    <div className="edit-todo-list-item-form-description">
+                        <AceEditor
+                            mode="markdown"
+                            theme="tomorrow"
+                            name="UNIQUE_ID_OF_DIV"
+                            showGutter={ false }
+                            width="100%"
+                            value={ this.props.description }
+                            editorProps={{ $blockScrolling: true }}
+                            maxLines={ Infinity }
+                            wrapEnabled={ true }
+                        />
+                    </div>
                 </div>
                 <div className="form-group">
                     <ul className="list-inline">
