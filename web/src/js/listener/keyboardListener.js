@@ -34,7 +34,12 @@ class KeyboardBinding {
     }
 
     unbind() {
-        mousetrap.unbind(this._key, this._callback);
+        if (this._global) {
+            // @see https://github.com/ccampbell/mousetrap/issues/306
+            mousetrap.bindGlobal(this._key, function () { });
+        } else {
+            mousetrap.unbind(this._key, this._callback);
+        }
     }
 }
 
