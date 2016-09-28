@@ -1,5 +1,6 @@
 import mousetrap from 'mousetrap';
 import uuid from 'uuid';
+import 'mousetrap/plugins/global-bind/mousetrap-global-bind.min';
 
 /**
  * @type {Object}
@@ -16,29 +17,36 @@ class KeyboardBinding {
     /**
      * @param {String} key
      * @param {Function} callback
+     * @param {Boolean=} global
      */
-    constructor(key, callback) {
-        this.key = key;
-        this.callback = callback;
+    constructor(key, callback, global = false) {
+        this._key = key;
+        this._callback = callback;
+        this._global = global;
     }
 
     bind() {
-        mousetrap.bind(this.key, this.callback);
+        if (this._global) {
+            mousetrap.bindGlobal(this._key, this._callback);
+        } else {
+            mousetrap.bind(this._key, this._callback);
+        }
     }
 
     unbind() {
-        mousetrap.unbind(this.key, this.callback);
+        mousetrap.unbind(this._key, this._callback);
     }
 }
 
 /**
- * @param {String} key
+ * @param {String|String[]} key
  * @param {Function} callback
+ * @param {Boolean} global
  */
-export function bind(key, callback) {
+export function bind(key, callback, global = false) {
     var id = uuid();
 
-    var binding = new KeyboardBinding(key, callback);
+    var binding = new KeyboardBinding(key, callback, global);
     binding.bind();
 
     _callbacks[id] = binding;
