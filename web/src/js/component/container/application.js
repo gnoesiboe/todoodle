@@ -147,10 +147,11 @@ class Application extends React.Component {
 
     /**
      * @param {String} title
+     * @param {String} description
      *
      * @private
      */
-    _onTodoListItemEdit(title) {
+    _onTodoListItemEdit(title, description) {
         var todoList = this.props.current.todoList,
             todoListItemId = this.props.current.todoListItemId;
 
@@ -165,7 +166,14 @@ class Application extends React.Component {
         }
 
         this.props.dispatch(
-            actionFactory.createEditTodoListItemAction(todoList.externalId, todoList.token, todoListItem.id, todoListItem.externalId, title)
+            actionFactory.createEditTodoListItemAction(
+                todoList.externalId,
+                todoList.token,
+                todoListItem.id,
+                todoListItem.externalId,
+                title,
+                description
+            )
         );
     }
 

@@ -338,15 +338,17 @@ export function createCreateTodoListItemAction(externalTodoListId, todoListToken
 /**
  * @param {String} id
  * @param {String} title
+ * @param {String} description
  *
  * @returns {Object}
  *
  * @private
  */
-var _createEditTodoListItemStartAction = function (id, title) {
+var _createEditTodoListItemStartAction = function (id, title, description) {
     return _createAction(actionType.EDIT_TODO_LIST_ITEM_START, {
         id: id,
-        title: title
+        title: title,
+        description: description
     });
 };
 
@@ -386,12 +388,13 @@ var _createEditTodoListItemStopAction = function (id, error = null) {
  * @param {String} id
  * @param {Number} externalTodoListItemId
  * @param {String} title
+ * @param {String} description
  */
-export function createEditTodoListItemAction(externalTodoListId, todoListToken, id, externalTodoListItemId, title) {
+export function createEditTodoListItemAction(externalTodoListId, todoListToken, id, externalTodoListItemId, title, description) {
     return function (dispatch) {
-        dispatch(_createEditTodoListItemStartAction(id, title));
+        dispatch(_createEditTodoListItemStartAction(id, title, description));
 
-        apiClient.editTodoListItem(externalTodoListId, todoListToken, externalTodoListItemId, title)
+        apiClient.editTodoListItem(externalTodoListId, todoListToken, externalTodoListItemId, title, description)
             .then((apiData) => {
                 dispatch(_createEditTodoListItemImportAction(id, apiData));
                 dispatch(_createEditTodoListItemStopAction(id));

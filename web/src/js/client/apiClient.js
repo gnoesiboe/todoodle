@@ -203,10 +203,11 @@ export function createTodoListItem(todoListId, todoListToken, title, id) {
  * @param {String} todoListToken
  * @param {Number} id
  * @param {String} title
+ * @param {String} description
  * 
  * @returns {Promise}
  */
-export function editTodoListItem(todoListId, todoListToken, id, title) {
+export function editTodoListItem(todoListId, todoListToken, id, title, description) {
     return new Promise(
         function (resolve, reject) {
             var url = window.Routing.generate('api_todo_list_item_edit', {
@@ -216,7 +217,8 @@ export function editTodoListItem(todoListId, todoListToken, id, title) {
             });
 
             var body = {
-                title: title
+                title: title,
+                description: description
             };
 
             _executePut(url, body)

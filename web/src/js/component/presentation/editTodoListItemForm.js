@@ -50,7 +50,7 @@ class EditTodoListItemForm extends React.Component {
         // prevent submit to backend
         event.preventDefault();
 
-        this.props.onEdit(this.state[TITLE_FIELD]);
+        this.props.onEdit(this.state[TITLE_FIELD], this.state[DESCRIPTION_FIELD]);
     }
 
     /**
@@ -65,6 +65,18 @@ class EditTodoListItemForm extends React.Component {
         this.setState({
             [fieldName]: field.value
         });
+    }
+
+    /**
+     * @param {String} fieldName
+     * @param {String} newValue
+     *
+     * @private
+     */
+    _onAceEditorChange(fieldName, newValue) {
+        this.setState({
+            [fieldName]: newValue
+        })
     }
 
     /**
@@ -83,56 +95,61 @@ class EditTodoListItemForm extends React.Component {
      * @returns {XML}
      */
     render() {
+
+
         return (
-            <form className="form" onSubmit={ this._onSubmit.bind(this) }>
-                <div className="form-group">
-                    <label
-                        className="control-label"
-                        htmlFor={ TITLE_FIELD + '_field_id' }
-                    >
-                        Title
-                    </label>
-                    <input
-                        type="text"
-                        value={ this.state[TITLE_FIELD] }
-                        ref={ TITLE_FIELD }
-                        id={ TITLE_FIELD + '_field_id' }
-                        onChange={ this._onFieldChange.bind(this, TITLE_FIELD) }
-                        className="form-control"
-                    />
-                </div>
-                <div className="form-group">
-                    <label
-                        className="control-label"
-                        htmlFor={ DESCRIPTION_FIELD + '_field_id' }
-                    >
-                        Description
-                    </label>
-                    <div className="edit-todo-list-item-form-description">
-                        <AceEditor
-                            mode="markdown"
-                            theme="tomorrow"
-                            name="UNIQUE_ID_OF_DIV"
-                            showGutter={ false }
-                            width="100%"
-                            value={ this.props.description }
-                            editorProps={{ $blockScrolling: true }}
-                            maxLines={ Infinity }
-                            wrapEnabled={ true }
+            <div className="edit-todo-list-item-form">
+                <form className="form" onSubmit={ this._onSubmit.bind(this) }>
+                    <div className="form-group">
+                        <label
+                            className="control-label"
+                            htmlFor={ TITLE_FIELD + '_field_id' }
+                        >
+                            Title
+                        </label>
+                        <input
+                            type="text"
+                            value={ this.state[TITLE_FIELD] }
+                            ref={ TITLE_FIELD }
+                            id={ TITLE_FIELD + '_field_id' }
+                            onChange={ this._onFieldChange.bind(this, TITLE_FIELD) }
+                            className="form-control"
                         />
                     </div>
-                </div>
-                <div className="form-group">
-                    <ul className="list-inline">
-                        <li>
-                            <button type="submit" className="btn btn-success">Save</button>
-                        </li>
-                        <li>
-                            <a href="#" onClick={ this._onCancel.bind(this)} className="btn btn-link">Cancel</a>
-                        </li>
-                    </ul>
-                </div>
-            </form>
+                    <div className="form-group">
+                        <label
+                            className="control-label"
+                            htmlFor={ DESCRIPTION_FIELD + '_field_id' }
+                        >
+                            Description
+                        </label>
+                        <div className="edit-todo-list-item-form-description">
+                            <AceEditor
+                                mode="markdown"
+                                theme="tomorrow"
+                                name="UNIQUE_ID_OF_DIV"
+                                showGutter={ false }
+                                width="100%"
+                                value={ this.state[DESCRIPTION_FIELD] }
+                                onChange={ this._onAceEditorChange.bind(this, DESCRIPTION_FIELD) }
+                                editorProps={{ $blockScrolling: true }}
+                                maxLines={ Infinity }
+                                wrapEnabled={ true }
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <ul className="list-inline">
+                            <li>
+                                <button type="submit" className="btn btn-success">Save</button>
+                            </li>
+                            <li>
+                                <a href="#" onClick={ this._onCancel.bind(this)} className="btn btn-link">Cancel</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
         );
     }
 }

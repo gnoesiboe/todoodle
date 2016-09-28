@@ -23,7 +23,7 @@ class TodoListDetail extends React.Component {
         return (
             <div className="todo-list-detail">
                 <h1 className="todo-list-detail-title">{ title }</h1>
-                <div dangerouslySetInnerHTML={{ __html: _showdownConverter.makeHtml(description) }} />
+                <div className="todo-list-detail-description" dangerouslySetInnerHTML={{ __html: _showdownConverter.makeHtml(description) }} />
             </div>
         );
     }

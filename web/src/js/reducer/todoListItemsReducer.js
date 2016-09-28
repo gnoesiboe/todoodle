@@ -208,6 +208,7 @@ var _handleEditTodoListItemStartAction = function (currentState, action) {
     var newTodoListItem = currentState.getOneWithIndex(index).clone();
 
     newTodoListItem.title = action.payload.title;
+    newTodoListItem.description = action.payload.description;
 
     return currentState.insertAtIndex(index, newTodoListItem);
 };
