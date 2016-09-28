@@ -22,7 +22,7 @@ class EditTodoListItemForm extends React.Component {
 
         this.state = {
             [TITLE_FIELD]: this.props.title,
-            [DESCRIPTION_FIELD]: this.props.description
+            [DESCRIPTION_FIELD]: this.props.description ? this.props.description : ''
         };
     }
 
@@ -95,8 +95,6 @@ class EditTodoListItemForm extends React.Component {
      * @returns {XML}
      */
     render() {
-
-
         return (
             <div className="edit-todo-list-item-form">
                 <form className="form" onSubmit={ this._onSubmit.bind(this) }>
@@ -127,7 +125,7 @@ class EditTodoListItemForm extends React.Component {
                             <AceEditor
                                 mode="markdown"
                                 theme="tomorrow"
-                                name="UNIQUE_ID_OF_DIV"
+                                name={ `ace_editor_for_item_${this.props.id}` }
                                 showGutter={ false }
                                 width="100%"
                                 value={ this.state[DESCRIPTION_FIELD] }
@@ -159,6 +157,7 @@ EditTodoListItemForm.defaultProps = {
 };
 
 EditTodoListItemForm.propTypes = {
+    id: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
     description: React.PropTypes.string,
     onEdit: React.PropTypes.func.isRequired,

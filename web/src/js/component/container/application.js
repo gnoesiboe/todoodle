@@ -236,6 +236,7 @@ class Application extends React.Component {
     _renderEditTodoListItemForm(todoListItem) {
         return (
             <EditTodoListItemForm
+                id={ todoListItem.id }
                 title={ todoListItem.title }
                 description={ todoListItem.description }
                 onEdit={ this._onTodoListItemEdit.bind(this) }
