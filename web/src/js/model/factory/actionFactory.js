@@ -509,6 +509,37 @@ export function createCancelEditTodoListItemAction(id) {
 /**
  * @returns {Function}
  */
+export function createRemoveCurrentTodoListItemAction() {
+    return function (dispatch, getState) {
+        var state = getState(),
+            current = state[stateNamespace.CURRENT],
+            todoListItems = state[stateNamespace.TODO_LIST_ITEMS];
+
+        if (current.todoListItemId === null) {
+            return;
+        }
+
+        var todoListItem = todoListItems.getOneById(current.todoListItemId),
+            todoList = current.todoList
+
+        if (!todoListItem) {
+            return;
+        }
+
+        dispatch(
+            createRemoveTodoListItemAction(
+                todoList.externalId,
+                todoList.token,
+                todoListItem.id,
+                todoListItem.externalId
+            )
+        );
+    }
+}
+
+/**
+ * @returns {Function}
+ */
 export function createToggleCheckedForCurrentTodoListItemAction() {
     return function (dispatch, getState) {
         var state = getState(),

@@ -38,7 +38,8 @@ class Application extends React.Component {
             keyboardListener.bind(['j', 'down'], this._onNextKeyboardBindingPressed.bind(this)),
             keyboardListener.bind(['k', 'up'], this._onPreviousKeyboardBindingPressed.bind(this)),
             keyboardListener.bind('e', this._onEditCurrentKeyboardBindingPressed.bind(this)),
-            keyboardListener.bind('space', this._onToggleCheckedKeyboardBindingPressed.bind(this))
+            keyboardListener.bind('space', this._onToggleCheckedKeyboardBindingPressed.bind(this)),
+            keyboardListener.bind('x', this._onRemoveKeyboardBindingPressed.bind(this))
         );
     }
 
@@ -49,6 +50,17 @@ class Application extends React.Component {
         this.props.dispatch(
             actionFactory.createToggleCheckedForCurrentTodoListItemAction()
         );
+    }
+
+    /**
+     * @private
+     */
+    _onRemoveKeyboardBindingPressed() {
+        if (confirm('Are you sure you want to delete the current item?!')) {
+            this.props.dispatch(
+                actionFactory.createRemoveCurrentTodoListItemAction()
+            );
+        }
     }
 
     /**
@@ -125,11 +137,13 @@ class Application extends React.Component {
      * @private
      */
     _onTodoListItemRemove(id, externalId) {
-        var todoList = this.props.current.todoList;
+        if (confirm('Are you sure you want to delete this item?!')) {
+            var todoList = this.props.current.todoList;
 
-        this.props.dispatch(
-            actionFactory.createRemoveTodoListItemAction(todoList.externalId, todoList.token, id, externalId)
-        );
+            this.props.dispatch(
+                actionFactory.createRemoveTodoListItemAction(todoList.externalId, todoList.token, id, externalId)
+            );
+        }
     }
 
     /**

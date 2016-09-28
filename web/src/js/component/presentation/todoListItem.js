@@ -33,9 +33,7 @@ class TodoListItem extends React.Component {
             return;
         }
 
-        if (confirm('Are you sure?!')) {
-            this.props.onRemove(this.props.id, this.props.externalId);
-        }
+        this.props.onRemove(this.props.id, this.props.externalId);
     }
 
     /**
