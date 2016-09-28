@@ -15,7 +15,8 @@ final class TodoListItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title');
+            ->add('title')
+            ->add('description');
     }
 
     public function configureOptions(OptionsResolver $resolver)

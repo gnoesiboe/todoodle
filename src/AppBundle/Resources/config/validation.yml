@@ -2,4 +2,7 @@ AppBundle\Entity\TodoListItem:
     properties:
         title:
             - NotBlank: ~
+            - Type: string
             - Length: { max: 255 }
+        description:
+            - Type: string
