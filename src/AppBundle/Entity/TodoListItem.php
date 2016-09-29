@@ -35,6 +35,11 @@ class TodoListItem
     private $checked = false;
 
     /**
+     * @var \DateTime|null
+     */
+    private $deadline = null;
+
+    /**
      * @param TodoList $todoList
      */
     public function __construct(TodoList $todoList)
@@ -136,6 +141,26 @@ class TodoListItem
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDeadline()
+    {
+        return $this->deadline;
+    }
+
+    /**
+     * @param \DateTime|null $deadline
+     *
+     * @return $this
+     */
+    public function setDeadline(\DateTime $deadline =  null)
+    {
+        $this->deadline = $deadline;
 
         return $this;
     }
