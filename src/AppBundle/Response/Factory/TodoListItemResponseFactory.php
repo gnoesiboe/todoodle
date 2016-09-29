@@ -3,6 +3,7 @@
 namespace AppBundle\Response\Factory;
 
 use AppBundle\Entity\TodoListItem;
+use AppBundle\Response\ResponseFormat;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -21,6 +22,7 @@ final class TodoListItemResponseFactory
             'id' => (int) $todoListItem->getId(),
             'title' => $todoListItem->getTitle(),
             'description' => $todoListItem->getDescription(),
+            'deadline' => $todoListItem->hasDeadline() ? $todoListItem->getDeadline()->format(ResponseFormat::DATE) : null,
             'checked' => $todoListItem->isChecked()
         ];
     }

@@ -164,4 +164,12 @@ class TodoListItem
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasDeadline()
+    {
+        return $this->deadline instanceof \DateTime;
+    }
 }
