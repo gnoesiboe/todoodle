@@ -1,6 +1,8 @@
 import Moment from 'moment';
 import 'moment/locale/nl';
 
+const DEFAULT_DATE_API_FORMAT = 'YYYY-MM-DD';
+
 /**
  * @param {*} value
  *
@@ -9,7 +11,7 @@ import 'moment/locale/nl';
  * @private
  */
 var _validateMomentIsValid = function (value) {
-    if (!_isMoment(value)) {
+    if (!isMoment(value)) {
         throw new Error('Value is not an instance of Moment');
     }
 
@@ -25,17 +27,41 @@ var _validateMomentIsValid = function (value) {
  *
  * @private
  */
-var _isMoment = function (value) {
+export function isMoment(value) {
     return value instanceof Moment;
-};
+}
+
+/**
+ * @param {Moment} value
+ */
+export function isTomorrow(value) {
+    _validateMomentIsValid(value);
+
+    var tomorrow = Moment();
+    tomorrow.add(1, 'days');
+
+    return tomorrow.format(DEFAULT_DATE_API_FORMAT) === value.format(DEFAULT_DATE_API_FORMAT);
+}
+
+/**
+ * @param {Moment} value
+ */
+export function isToday(value) {
+    _validateMomentIsValid(value);
+
+    var today = Moment();
+
+    return today.format(DEFAULT_DATE_API_FORMAT) === value.format(DEFAULT_DATE_API_FORMAT);
+}
 
 /**
  * @param {String} value
+ * @param {String=} format
  *
  * @returns {Moment}
  */
-export function toMoment(value) {
-    var theMoment = Moment(value);
+export function toMoment(value, format = DEFAULT_DATE_API_FORMAT) {
+    var theMoment = Moment(value, format);
 
     _validateMomentIsValid(theMoment);
 

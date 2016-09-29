@@ -23,6 +23,7 @@ class TodoList extends React.Component {
                             />
                         </td>
                         <td />
+                        <td />
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +34,7 @@ class TodoList extends React.Component {
                                 id={ todoListItem.id }
                                 externalId={ todoListItem.externalId }
                                 title={ todoListItem.title }
+                                deadline={ todoListItem.deadline }
                                 checked={ todoListItem.checked }
                                 onCheckedChange={ this.props.onTodoCheckedChange }
                                 onRemove={ this.props.onTodoListItemRemove }
