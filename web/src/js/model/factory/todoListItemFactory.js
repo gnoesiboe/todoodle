@@ -2,6 +2,8 @@ import TodoListItemCollection from './../../collection/todoListItemCollection';
 import { validatePropertyPathExists } from './../../helper/objectHelper';
 import uuid from 'uuid';
 import TodoListItem from './../todoListItem';
+import _ from 'lodash';
+import { toMoment } from './../../helper/dateHelper';
 
 /**
  * @param {String} id
@@ -9,16 +11,18 @@ import TodoListItem from './../todoListItem';
  * @param {Number=} externalId
  * @param {Boolean=} checked
  * @param {String=} description
+ * @param {String=} deadline
  *
  * @returns {TodoListItem}
  */
-export function createModel(id, title, externalId = null, checked = false, description = null) {
+export function createModel(id, title, externalId = null, checked = false, description = null, deadline = null) {
     return new TodoListItem(
         id,
         title,
         externalId,
         checked,
-        description
+        description,
+        _.isString(deadline) ? toMoment(deadline) : null
     );
 }
 
@@ -34,13 +38,15 @@ export function createFromApiInput(apiInput) {
     validatePropertyPathExists(apiInput, 'title', unexpectedResponseMessage);
     validatePropertyPathExists(apiInput, 'checked', unexpectedResponseMessage);
     validatePropertyPathExists(apiInput, 'description', unexpectedResponseMessage);
+    validatePropertyPathExists(apiInput, 'deadline', unexpectedResponseMessage);
 
     return createModel(
         uuid(),
         apiInput.title,
         apiInput.id,
         apiInput.checked,
-        apiInput.description
+        apiInput.description,
+        apiInput.deadline
     );
 }
 

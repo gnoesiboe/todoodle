@@ -9,13 +9,15 @@ class TodoListItem {
      * @param {Number=} externalId
      * @param {Boolean=} checked
      * @param {String=} description
+     * @param {Moment=} deadline
      */
-    constructor(id, title, externalId = null, checked = false, description = null) {
+    constructor(id, title, externalId = null, checked = false, description = null, deadline = null) {
         this._id = id;
         this._title = title;
         this._externalId = externalId;
         this._checked = checked;
         this._description = description;
+        this._deadline = deadline;
     }
 
     /**
@@ -79,6 +81,20 @@ class TodoListItem {
      */
     set description(description) {
         this._description = description;
+    }
+
+    /**
+     * @returns {Moment|null}
+     */
+    get deadline() {
+        return this._deadline;
+    }
+
+    /**
+     * @param {Moment|null} deadline
+     */
+    set deadline(deadline) {
+        this._deadline = deadline;
     }
 
     /**
