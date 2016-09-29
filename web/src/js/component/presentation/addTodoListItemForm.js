@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import * as keyboardListener from './../../listener/keyboardListener';
 
 const TITLE_FIELD = 'title';
 
@@ -14,6 +16,66 @@ class AddTodoListItemForm extends React.Component {
         super(props);
 
         this.state = this._getResetState();
+
+        this._keyboardBindingIds = [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    componentDidMount() {
+        this._bindKeyboardShortcuts();
+    }
+
+    /**
+     * @private
+     */
+    _bindKeyboardShortcuts() {
+        this._keyboardBindingIds.push(
+            keyboardListener.bind('a', this._onFocusKeyboardBindingPressed.bind(this)),
+            keyboardListener.bind('esc', this._onBlurKeyboardBindingPressed.bind(this), true)
+        );
+    }
+
+    /**
+     * @private
+     */
+    _onBlurKeyboardBindingPressed() {
+        this._blurTitleField();
+    }
+
+    /**
+     * @private
+     */
+    _blurTitleField() {
+        ReactDOM.findDOMNode(this.refs[TITLE_FIELD]).blur();
+    }
+
+    /**
+     * @param {Event} event
+     *
+     * @private
+     */
+    _onFocusKeyboardBindingPressed(event) {
+
+        // prevent letter 'a' from being typed in add todo list item form
+        event.preventDefault();
+
+        this._focusTitleField();
+    }
+
+    /**
+     * @private
+     */
+    _focusTitleField() {
+        ReactDOM.findDOMNode(this.refs[TITLE_FIELD]).focus();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    componentWillUnmount() {
+        keyboardListener.unbindBatch(this._keyboardBindingIds);
     }
 
     /**
@@ -68,6 +130,7 @@ class AddTodoListItemForm extends React.Component {
                             id="add-todo-list-item-form-title"
                             className="form-control"
                             placeholder="Type the title of your todo and press enter"
+                            ref={ TITLE_FIELD }
                             value={ this.state.title }
                             onChange={ this._onFieldChange.bind(this, TITLE_FIELD) }
                         />

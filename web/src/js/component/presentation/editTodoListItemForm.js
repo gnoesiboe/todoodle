@@ -41,16 +41,8 @@ class EditTodoListItemForm extends React.Component {
      */
     _bindKeyboardShortcuts() {
         this._keyboardBindingIds.push(
-            keyboardListener.bind(['command+enter', 'ctrl+enter'], this._onSubmitKeyboardBindingPressed.bind(this), true),
-            keyboardListener.bind('esc', this._onCancelKeyboardBindingPressed.bind(this), true)
+            keyboardListener.bind(['command+enter', 'ctrl+enter'], this._onSubmitKeyboardBindingPressed.bind(this), true)
         );
-    }
-
-    /**
-     * @private
-     */
-    _onCancelKeyboardBindingPressed() {
-        this.props.onCancel();
     }
 
     /**
