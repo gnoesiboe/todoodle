@@ -4,6 +4,7 @@ namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\TodoListItem;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,7 +17,10 @@ final class TodoListItemType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('description');
+            ->add('description')
+            ->add('deadline', DateType::class, [
+                'widget' => 'single_text'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

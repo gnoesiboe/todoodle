@@ -106,7 +106,8 @@ class TodoListItem {
             this._title,
             this._externalId,
             this._checked,
-            this._description
+            this._description,
+            this._deadline
         );
     }
 }

@@ -171,10 +171,11 @@ export function uncheckTodoListItem(todoListId, todoListToken, id) {
  * @param {String} todoListToken
  * @param {String} title
  * @param {String} id
+ * @param {Moment|null=} deadline
  *
  * @returns {Promise}
  */
-export function createTodoListItem(todoListId, todoListToken, title, id) {
+export function createTodoListItem(todoListId, todoListToken, title, id, deadline = null) {
     return new Promise(
         function (resolve, reject) {
             var url = window.Routing.generate('api_todo_list_item_create', {
@@ -188,7 +189,8 @@ export function createTodoListItem(todoListId, todoListToken, title, id) {
             url += `?external_reference=${id}`;
 
             var body = {
-                title: title
+                title: title,
+                deadline: deadline ? deadline.format('YYYY-MM-DD') : null
             };
 
             _executePost(url, body)

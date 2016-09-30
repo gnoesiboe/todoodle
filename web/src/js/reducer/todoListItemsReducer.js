@@ -5,7 +5,7 @@ import _ from 'lodash';
 import {
     createCollectionFromApiInput,
     createFromApiInput,
-    createModelFromQuickAdd
+    createModel
 } from './../model/factory/todoListItemFactory';
 
 /**
@@ -189,7 +189,14 @@ var _handleRemoveTodoListItemStart = function (currentState, action) {
  * @private
  */
 var _handleCreateTodoListItemStartAction = function (currentState, action) {
-    var newTodo = createModelFromQuickAdd(action.payload.id, action.payload.title);
+    var newTodo = createModel(
+        action.payload.id,
+        action.payload.title,
+        null,
+        false,
+        null,
+        action.payload.deadline
+    );
 
     return currentState.addItem(newTodo);
 };

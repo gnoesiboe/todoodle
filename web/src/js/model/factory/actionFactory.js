@@ -2,6 +2,7 @@ import uuid from 'uuid';
 import * as actionType from './../actionType';
 import * as apiClient from './../../client/apiClient';
 import * as stateNamespace from './../../model/stateNamespace';
+import { parseQuickAddTitle } from './../../parser/quickAddTitleParser';
 
 /**
  * @param {String} type
@@ -269,15 +270,17 @@ export function createRemoveTodoListItemAction(externalTodoListId, todoListToken
 /**
  * @param {String} id
  * @param {String} title
+ * @param {Moment|null} deadline
  *
  * @returns {Object}
  *
  * @private
  */
-var _createCreateTodoListItemStartAction = function (id, title) {
+var _createCreateTodoListItemStartAction = function (id, title, deadline) {
     return _createAction(actionType.CREATE_TODO_LIST_ITEM_START, {
         id: id,
-        title: title
+        title: title,
+        deadline: deadline
     });
 };
 
@@ -318,13 +321,15 @@ var _createCreateTodoListItemStopAction = function (id, error = null) {
  *
  * @returns {Function}
  */
-export function createCreateTodoListItemAction(externalTodoListId, todoListToken, title) {
+export function createCreateTodoListItemAction(externalTodoListId, todoListToken, quickAddTitle) {
     var id = uuid();
 
     return function (dispatch) {
-        dispatch(_createCreateTodoListItemStartAction(id, title));
+        var { title, deadline } = parseQuickAddTitle(quickAddTitle);
 
-        apiClient.createTodoListItem(externalTodoListId, todoListToken, title, id)
+        dispatch(_createCreateTodoListItemStartAction(id, title, deadline));
+
+        apiClient.createTodoListItem(externalTodoListId, todoListToken, title, id, deadline)
             .then((apiData) => {
                 dispatch(_createCreateTodoListItemImportAction(id, apiData));
                 dispatch(_createCreateTodoListItemStopAction(id));
