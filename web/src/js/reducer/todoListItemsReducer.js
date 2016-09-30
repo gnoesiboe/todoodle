@@ -2,7 +2,11 @@ import TodoListItemCollection from './../collection/todoListItemCollection';
 import * as actionType from './../model/actionType';
 import { validatePropertyPathExists } from './../helper/objectHelper';
 import _ from 'lodash';
-import { createCollectionFromApiInput, createFromApiInput, createModel } from './../model/factory/todoListItemFactory';
+import {
+    createCollectionFromApiInput,
+    createFromApiInput,
+    createModelFromQuickAdd
+} from './../model/factory/todoListItemFactory';
 
 /**
  * @type {TodoListItemCollection}
@@ -184,8 +188,8 @@ var _handleRemoveTodoListItemStart = function (currentState, action) {
  *
  * @private
  */
-var _handleTodoListItemStartAction = function (currentState, action) {
-    var newTodo = createModel(action.payload.id, action.payload.title);
+var _handleCreateTodoListItemStartAction = function (currentState, action) {
+    var newTodo = createModelFromQuickAdd(action.payload.id, action.payload.title);
 
     return currentState.addItem(newTodo);
 };
@@ -238,7 +242,7 @@ export default function todoListItemsReducer(currentState = _defaultState, actio
             return _handleRemoveTodoListItemStart(currentState, action);
 
         case actionType.CREATE_TODO_LIST_ITEM_START:
-            return _handleTodoListItemStartAction(currentState, action);
+            return _handleCreateTodoListItemStartAction(currentState, action);
 
         case actionType.CREATE_TODO_LIST_ITEM_IMPORT:
             return _handleCreateTodoListItemImportAction(currentState, action);

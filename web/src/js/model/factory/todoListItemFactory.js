@@ -3,7 +3,10 @@ import { validatePropertyPathExists } from './../../helper/objectHelper';
 import uuid from 'uuid';
 import TodoListItem from './../todoListItem';
 import _ from 'lodash';
-import { toMoment } from './../../helper/dateHelper';
+import { toMoment, isMoment } from './../../helper/dateHelper';
+import { parseDeadline } from './../../parser/deadlineParser';
+
+const QUICK_ADD_DEADLINE_PATTERN = /:([^ ]+)/;
 
 /**
  * @param {String} id
@@ -11,7 +14,7 @@ import { toMoment } from './../../helper/dateHelper';
  * @param {Number=} externalId
  * @param {Boolean=} checked
  * @param {String=} description
- * @param {String=} deadline
+ * @param {String|Moment=} deadline
  *
  * @returns {TodoListItem}
  */
@@ -22,8 +25,30 @@ export function createModel(id, title, externalId = null, checked = false, descr
         externalId,
         checked,
         description,
-        _.isString(deadline) ? toMoment(deadline) : null
+        _.isString(deadline) ? toMoment(deadline) : deadline
     );
+}
+
+/**
+ * @param {String} id
+ * @param {String} title
+ *
+ * @returns {TodoListItem}
+ */
+export function createModelFromQuickAdd(id, title) {
+    var deadlineMatches = title.match(QUICK_ADD_DEADLINE_PATTERN);
+
+    if (_.isArray(deadlineMatches) && typeof deadlineMatches[1] !== 'undefined') {
+        var deadline = parseDeadline(deadlineMatches[1]);
+
+        if (isMoment(deadline)) {
+            title = title.replace(QUICK_ADD_DEADLINE_PATTERN, '');
+        } else {
+            deadline = null;
+        }
+    }
+
+    return createModel(id, title, null, false, null, deadline);
 }
 
 /**
