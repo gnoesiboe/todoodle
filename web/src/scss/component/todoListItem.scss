@@ -1,0 +1,21 @@
+.todo-list-item {
+
+}
+
+    .todo-list-item-actions {
+        width: 50px;
+    }
+
+    .todo-list-item--current {
+        background-color: #fff9ca;
+    }
+
+    .todo-list-item-deadline--muted {
+        color: #ddd;
+    }
+
+    .todo-list-item-deadline--urgent {
+        background: #ffbcbe;
+        padding: 5px;
+        border-radius: 3px;
+    }

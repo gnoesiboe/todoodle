@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import * as dateHelper from './../../helper/dateHelper';
 import Moment from 'moment';
+import './../../../scss/component/todoListItem.scss';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>

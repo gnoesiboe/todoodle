@@ -1,5 +1,6 @@
 import React from 'react';
 import showdown from 'showdown';
+import './../../../scss/component/todoListDetail.scss';
 
 var _showdownConverter = new showdown.Converter({
     headerLevelStart: 3,

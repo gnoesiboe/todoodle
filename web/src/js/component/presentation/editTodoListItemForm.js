@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import brace from 'brace';
+import 'brace';
 import AceEditor from 'react-ace';
 import 'brace/mode/markdown';
 import 'brace/theme/tomorrow';
 import * as keyboardListener from './../../listener/keyboardListener';
+import './../../../scss/component/editTodoListItemForm.scss';
 
 const TITLE_FIELD = 'title';
 const DESCRIPTION_FIELD = 'description';

@@ -2,6 +2,7 @@ import React from 'react';
 import TodoListItemCollection from './../../collection/todoListItemCollection';
 import TodoListItem from './todoListItem';
 import AddTodoListItemForm from './addTodoListItemForm';
+import './../../../scss/component/todoList.scss';
 
 /**
  * @author Gijs Nieuwenhuis <gijs.nieuwenhuis@freshheads.com>

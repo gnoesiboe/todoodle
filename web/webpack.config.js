@@ -10,13 +10,17 @@ module.exports = {
         publicPath: '/build/',
         hash: true
     },
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     module: {
         loaders: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loaders: ["babel-loader"]
+            },
+            {
+                test: /\.scss$/,
+                loaders: ["style", "css", "sass"]
             }
         ]
     }
