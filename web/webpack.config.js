@@ -1,4 +1,5 @@
-var path = require('path');
+var path = require('path'),
+    autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: {
@@ -10,6 +11,14 @@ module.exports = {
         publicPath: '/build/',
         hash: true
     },
+    resolve: {
+        extensions: ['', '.scss', '.css', '.js', '.json'],
+        modulesDirectories: [
+            'node_modules',
+            path.resolve(__dirname, './node_modules')
+        ]
+    },
+    postcss: [autoprefixer],
     devtool: 'source-map',
     module: {
         loaders: [
@@ -20,7 +29,7 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                loaders: ["style", "css", "sass"]
+                loaders: ["style", "css?modules", "sass"]
             }
         ]
     }

@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import * as es6Promise from 'es6-promise';
 import './../scss/component/container.scss';
+import 'react-toolbox/lib/commons.scss';
 
 var containerDomElements = document.getElementsByClassName('js-app-container');
 
