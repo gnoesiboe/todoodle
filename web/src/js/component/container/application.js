@@ -284,26 +284,20 @@ class Application extends React.Component {
 
         }
 
-        return (
-            <div className="col-sm-6">
-                { isBeingEdited
-                    ? this._renderEditTodoListItemForm(currentTodoListItem)
-                    : Application._renderTodoListDetail(currentTodoListItem)
-                }
-            </div>
-        );
+        return isBeingEdited
+            ? this._renderEditTodoListItemForm(currentTodoListItem)
+            : Application._renderTodoListDetail(currentTodoListItem);
     }
 
     /**
      * @returns {XML}
      */
     render() {
-        var { current, todoListItems } = this.props,
-            currentTodoListItemId = current.todoListItemId;
+        var { current, todoListItems } = this.props;
 
         return (
             <div className="row">
-                <div className={ currentTodoListItemId ? 'col-sm-6' : 'col-sm-12' }>
+                <div className="col-sm-6">
                     <TodoList
                         items={ todoListItems }
                         editingTodoListItemId={ current.editingTodoListItemId }
@@ -314,10 +308,12 @@ class Application extends React.Component {
                         onTodoListItemClick={ this._onTodoListItemClick.bind(this) }
                         onTodoListItemEditStart={ this._onTodoListItemEditStart.bind(this) }
                         onTodoListItemEditCancel={ this._onTodoListItemEditCancel.bind(this) }
-                        currentTodoListItemId={ currentTodoListItemId }
+                        currentTodoListItemId={ current.todoListItemId }
                     />
                 </div>
-                { this._renderDetailView() }
+                <div className="col-sm-6">
+                    { this._renderDetailView() }
+                </div>
             </div>
         );
     }
