@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as keyboardListener from './../../listener/keyboardListener';
-import Input from 'react-toolbox/lib/input';
-import { Button } from 'react-toolbox/lib/button';
 
 const TITLE_FIELD = 'title';
 
@@ -93,13 +91,15 @@ class AddTodoListItemForm extends React.Component {
 
     /**
      * @param {String} fieldName
-     * @param {String} value
+     * @param {Event} event
      *
      * @private
      */
-    _onFieldChange(fieldName, value) {
+    _onFieldChange(fieldName, event) {
+        var field = event.target;
+
         this.setState({
-            [fieldName]: value
+            [fieldName]: field.value
         });
     }
 
@@ -124,10 +124,12 @@ class AddTodoListItemForm extends React.Component {
             <div className="add-todo-list-item-form">
                 <form action="" method="get" className="form" onSubmit={ this._onSubmit.bind(this) }>
                     <div className="form-group">
-                        <Input
+                        <label htmlFor="add-todo-list-item-form-title" />
+                        <input
                             type="text"
-                            label="Title"
-                            name="title"
+                            id="add-todo-list-item-form-title"
+                            className="form-control"
+                            placeholder="Type the title of your todo and press enter"
                             ref={ TITLE_FIELD }
                             value={ this.state.title }
                             onChange={ this._onFieldChange.bind(this, TITLE_FIELD) }

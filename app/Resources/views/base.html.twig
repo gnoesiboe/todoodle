@@ -8,10 +8,6 @@
         <title>{% block title %}Todoodle{% endblock %}</title>
 
         {% block stylesheets %}
-            <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-            {# @todo move to boostrap sass #}
             <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}" />
             <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap-theme.min.css') }}" />
         {% endblock %}
@@ -24,7 +20,6 @@
         </div>
 
         {% block javascripts %}
-            {# @todo move to webpack? Is this even needed? #}
             <script src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
             <script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
